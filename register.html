@@ -1,92 +1,40 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إنشاء حساب - T3leem</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: "#3c5750",
-                        accent: "#F2B600",
-                    },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
-                    },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                    },
-                },
-            },
-        };
+                        primary: '#3c5750',
+                        accent: '#F2B600',
+                    }
+                }
+            }
+        }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: "Tajawal", sans-serif; }
-        
-        .auth-gradient {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
-            min-height: 100vh;
-        }
-        
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-        
-        .input-animated { transition: all 0.3s ease; }
-        .input-animated:focus {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 40px -10px rgba(60, 87, 80, 0.3);
-        }
-        
-        .btn-glow { transition: all 0.3s ease; }
-        .btn-glow:hover {
-            box-shadow: 0 0 30px rgba(60, 87, 80, 0.4);
-            transform: translateY(-2px);
-        }
-        
-        .role-btn { transition: all 0.3s ease; }
-        .role-btn:hover { transform: translateY(-3px); }
-        
-        .role-btn.active {
-            background: linear-gradient(135deg, #3c5750, #4a6b62);
-            border-color: #3c5750;
-        }
-        
-        .social-btn { transition: all 0.3s ease; }
-        .social-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .animate-fade-in { animation: fadeInUp 0.6s ease-out forwards; }
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-300 { animation-delay: 0.3s; }
+        body { font-family: 'Tajawal', sans-serif; }
     </style>
 </head>
-<body class="auth-gradient min-h-screen flex flex-col">
+<body class="bg-gray-50 min-h-screen">
     <!-- Navbar -->
-    <nav class="bg-white/80 backdrop-blur-xl border-b border-gray-100/50 sticky top-0 z-50">
+    <nav class="bg-white border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <div class="flex items-center gap-3 group">
-                    <div class="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-lg"></i>
                     </div>
-                    <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">T3leem</a>
+                    <a href="index.html" class="text-xl font-bold text-primary">T3leem</a>
                 </div>
-                <a href="index.html" class="px-5 py-2.5 text-gray-600 hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-300 font-medium">
+                <a href="index.html" class="text-gray-600 hover:text-primary transition-colors">
                     <i class="fas fa-home ml-2"></i>
                     العودة للرئيسية
                 </a>
@@ -95,131 +43,63 @@
     </nav>
 
     <!-- Register Form -->
-    <div class="flex-1 flex items-center justify-center py-12 px-4">
+    <div class="flex items-center justify-center py-12 px-4">
         <div class="max-w-md w-full">
-            <div class="glass-card rounded-[2rem] p-8 md:p-10">
-                <!-- Header -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
                 <div class="text-center mb-8">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary to-primary/80 rounded-2xl mb-4 shadow-lg">
-                        <i class="fas fa-user-plus text-white text-2xl"></i>
-                    </div>
-                    <h1 class="text-3xl font-bold text-gray-900">إنشاء حساب جديد</h1>
-                    <p class="text-2">انضم إلى مجتمع التعلم</-gray-500 mtp>
+                    <h1 class="text-2xl font-bold text-gray-900">إنشاء حساب جديد</h1>
+                    <p class="text-gray-500 mt-2">انضم إلى مجتمع التعلم</p>
                 </div>
                 
                 <!-- Role Selection -->
-                <div class="flex gap-4 mb-8">
-                    <button type="button" onclick="selectRole('student')" id="role-student" class="role-btn active flex-1 py-4 border-2 border-gray-200 rounded-2xl text-center font-semibold text-gray-600 hover:border-primary">
+                <div class="flex gap-4 mb-6">
+                    <button type="button" onclick="selectRole('student')" id="role-student" class="flex-1 py-3 border-2 border-primary bg-primary/5 rounded-xl text-center font-medium text-primary">
                         <i class="fas fa-user-graduate ml-2"></i>
                         طالب
                     </button>
-                    <button type="button" onclick="selectRole('teacher')" id="role-teacher" class="role-btn flex-1 py-4 border-2 border-gray-200 rounded-2xl text-center font-semibold text-gray-600 hover:border-primary">
+                    <button type="button" onclick="selectRole('teacher')" id="role-teacher" class="flex-1 py-3 border-2 border-gray-200 rounded-xl text-center font-medium text-gray-600 hover:border-primary transition-colors">
                         <i class="fas fa-chalkboard-teacher ml-2"></i>
                         معلم
                     </button>
                 </div>
                 
-                <form class="space-y-5">
-                    <!-- Name -->
+                <form class="space-y-4">
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">الاسم الأول</label>
-                            <input type="text" placeholder="أحمد" class="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 input-animated" />
+                            <label class="block text-sm font-medium text-gray-700 mb-2">الاسم الأول</label>
+                            <input type="text" placeholder="أحمد" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">اسم العائلة</label>
-                            <input type="text" placeholder="محمد" class="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 input-animated" />
+                            <label class="block text-sm font-medium text-gray-700 mb-2">اسم العائلة</label>
+                            <input type="text" placeholder="محمد" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
                         </div>
                     </div>
                     
-                    <!-- Email -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">البريد الإلكتروني</label>
-                        <div class="relative group">
-                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary">
-                                <i class="fas fa-envelope"></i>
-                            </span>
-                            <input type="email" placeholder="example@email.com" class="w-full px-12 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 input-animated" />
-                        </div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">البريد الإلكتروني</label>
+                        <input type="email" placeholder="example@email.com" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
                     </div>
                     
-                    <!-- Phone -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">رقم الهاتف</label>
-                        <div class="relative group">
-                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary">
-                                <i class="fas fa-phone"></i>
-                            </span>
-                            <input type="tel" placeholder="+966 55 123 4567" class="w-full px-12 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 input-animated" />
-                        </div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">كلمة المرور</label>
+                        <input type="password" placeholder="••••••••" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
                     </div>
                     
-                    <!-- Password -->
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">كلمة المرور</label>
-                        <div class="relative group">
-                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary">
-                                <i class="fas fa-lock"></i>
-                            </span>
-                            <input type="password" placeholder="••••••••" class="w-full px-12 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 input-animated" />
-                        </div>
-                        <p class="text-xs text-gray-500 mt-2">يجب أن تكون 8 أحرف على الأقل</p>
-                    </div>
-                    
-                    <!-- Confirm Password -->
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">تأكيد كلمة المرور</label>
-                        <div class="relative group">
-                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary">
-                                <i class="fas fa-lock"></i>
-                            </span>
-                            <input type="password" placeholder="••••••••" class="w-full px-12 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 input-animated" />
-                        </div>
-                    </div>
-                    
-                    <!-- Terms -->
                     <div class="flex items-start gap-2">
-                        <input type="checkbox" class="w-5 h-5 mt-0.5 rounded border-gray-300 text-primary focus:ring-primary" />
+                        <input type="checkbox" class="w-4 h-4 mt-1 rounded border-gray-300 text-primary">
                         <span class="text-sm text-gray-600">
-                            أوافق على
-                            <a href="#" class="text-primary hover:underline font-medium">الشروط والأحكام</a>
-                            و
-                            <a href="#" class="text-primary hover:underline font-medium">سياسة الخصوصية</a>
+                            أوافق على <a href="#" class="text-primary hover:underline">الشروط</a>
                         </span>
                     </div>
                     
-                    <!-- Submit -->
-                    <button type="submit" class="w-full py-4 bg-gradient-to-r from-primary to-primary/90 text-white font-bold rounded-2xl hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 btn-glow">
+                    <button type="submit" class="w-full py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 transition-colors">
                         إنشاء حساب
                     </button>
                 </form>
                 
-                <!-- Divider -->
-                <div class="mt-6 relative">
-                    <div class="absolute inset-0 flex items-center">
-                        <div class="w-full border-t border-gray-200"></div>
-                    </div>
-                    <div class="relative flex justify-center text-sm">
-                        <span class="px-4 bg-white text-gray-500">أو</span>
-                    </div>
-                </div>
-                
-                <!-- Social -->
-                <div class="mt-6 grid grid-cols-2 gap-4">
-                    <button class="social-btn flex items-center justify-center gap-2 py-3.5 border border-gray-200 rounded-2xl hover:bg-gray-50">
-                        <img src="https://www.google.com/favicon.ico" alt="Google" class="w-5 h-5">
-                        <span class="text-sm font-medium">Google</span>
-                    </button>
-                    <button class="social-btn flex items-center justify-center gap-2 py-3.5 border border-gray-200 rounded-2xl hover:bg-gray-50">
-                        <i class="fab fa-github text-xl"></i>
-                        <span class="text-sm font-medium">GitHub</span>
-                    </button>
-                </div>
-                
-                <!-- Login Link -->
                 <p class="mt-8 text-center text-gray-600">
-                    لديك حساب بالفعل؟
-                    <a href="login.html" class="text-primary font-bold hover:underline">تسجيل الدخول</a>
+                    لديك حساب؟
+                    <a href="login.html" class="text-primary font-semibold hover:underline">تسجيل الدخول</a>
                 </p>
             </div>
         </div>
@@ -231,11 +111,11 @@
             const teacherBtn = document.getElementById('role-teacher');
             
             if (role === 'student') {
-                studentBtn.className = 'role-btn active flex-1 py-4 border-2 border-primary rounded-2xl text-center font-semibold text-white';
-                teacherBtn.className = 'role-btn flex-1 py-4 border-2 border-gray-200 rounded-2xl text-center font-semibold text-gray-600 hover:border-primary';
+                studentBtn.className = 'flex-1 py-3 border-2 border-primary bg-primary/5 rounded-xl text-center font-medium text-primary';
+                teacherBtn.className = 'flex-1 py-3 border-2 border-gray-200 rounded-xl text-center font-medium text-gray-600 hover:border-primary transition-colors';
             } else {
-                teacherBtn.className = 'role-btn active flex-1 py-4 border-2 border-primary rounded-2xl text-center font-semibold text-white';
-                studentBtn.className = 'role-btn flex-1 py-4 border-2 border-gray-200 rounded-2xl text-center font-semibold text-gray-600 hover:border-primary';
+                teacherBtn.className = 'flex-1 py-3 border-2 border-primary bg-primary/5 rounded-xl text-center font-medium text-primary';
+                studentBtn.className = 'flex-1 py-3 border-2 border-gray-200 rounded-xl text-center font-medium text-gray-600 hover:border-primary transition-colors';
             }
         }
     </script>

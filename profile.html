@@ -1,37 +1,38 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الملف الشخصي - T3leem</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { primary: "#3c5750", accent: "#F2B600" },
-                },
-            },
-        };
+                    colors: {
+                        primary: '#3c5750',
+                        accent: '#F2B600',
+                    }
+                }
+            }
+        }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: "Tajawal", sans-serif; }
-        .card-hover { transition: all 0.3s ease; }
-        .card-hover:hover { transform: translateY(-3px); }
+        body { font-family: 'Tajawal', sans-serif; }
     </style>
 </head>
 <body class="bg-gray-50">
     <!-- Navbar -->
-    <nav class="bg-white/80 backdrop-blur-xl border-b border-gray-100 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center">
-                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-lg"></i>
                     </div>
-                    <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">T3leem</a>
+                    <a href="index.html" class="text-xl font-bold text-primary">T3leem</a>
                 </div>
                 <div class="flex items-center gap-4">
                     <a href="student-dashboard.html" class="text-gray-600 hover:text-primary"><i class="fas fa-home text-xl"></i></a>
@@ -42,33 +43,26 @@
     </nav>
 
     <!-- Profile Header -->
-    <div class="bg-gradient-to-r from-primary to-primary/80 text-white py-16">
-        <div class="max-w-5xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center gap-8">
-                <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop&crop=face" alt="Profile" class="w-40 h-40 rounded-full border-4 border-white/30 shadow-2xl">
-                    <button class="absolute bottom-0 left-0 w-10 h-10 bg-accent rounded-full flex items-center justify-center text-gray-900 shadow-lg hover:scale-110 transition-transform"><i class="fas fa-camera"></i></button>
-                </div>
-                <div class="text-center md:text-right">
-                    <h1 class="text-3xl font-bold mb-2">أحمد محمد</h1>
-                    <p class="text-white/80 mb-4">طالب ومصمم تطبيقات</p>
-                    <div class="flex flex-wrap justify-center md:justify-start gap-4">
-                        <span class="bg-white/20 px-4 py-2 rounded-xl"><i class="fas fa-map-marker-alt ml-2"></i>الرياض، السعودية</span>
-                        <span class="bg-white/20 px-4 py-2 rounded-xl"><i class="fas fa-envelope ml-2"></i>ahmed@example.com</span>
-                    </div>
-                </div>
-                <div class="md:mr-auto flex gap-4">
-                    <div class="text-center">
-                        <div class="text-2xl font-bold">12</div>
-                        <div class="text-white/70 text-sm">كورسات</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold">48</div>
-                        <div class="text-white/70 text-sm">دروس</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold">3</div>
-                        <div class="text-white/70 text-sm">شهادات</div>
+    <div class="bg-primary py-12">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face" alt="Profile" class="w-32 h-32 rounded-full border-4 border-white shadow-lg">
+                <div class="text-center md:text-right text-white">
+                    <h1 class="text-2xl font-bold">أحمد محمد</h1>
+                    <p class="text-white/80">student@t3leem.com</p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-4 mt-4">
+                        <div class="bg-white/10 px-4 py-2 rounded-lg">
+                            <span class="font-bold">12</span>
+                            <span class="text-white/80 text-sm mr-1">كورس</span>
+                        </div>
+                        <div class="bg-white/10 px-4 py-2 rounded-lg">
+                            <span class="font-bold">48</span>
+                            <span class="text-white/80 text-sm mr-1">درس</span>
+                        </div>
+                        <div class="bg-white/10 px-4 py-2 rounded-lg">
+                            <span class="font-bold">3</span>
+                            <span class="text-white/80 text-sm mr-1">شهادة</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -76,82 +70,71 @@
     </div>
 
     <!-- Main -->
-    <main class="max-w-5xl mx-auto px-4 py-12">
+    <main class="max-w-4xl mx-auto px-4 py-8">
         <!-- Tabs -->
         <div class="flex border-b border-gray-200 mb-8">
-            <button class="px-6 py-3 font-bold text-primary border-b-2 border-primary" data-tab="courses" data-tab-group="profile">كورساتي</button>
-            <button class="px-6 py-3 font-medium text-gray-500 hover:text-gray-900" data-tab="posts" data-tab-group="profile">منشوراتي</button>
-            <button class="px-6 py-3 font-medium text-gray-500 hover:text-gray-900" data-tab="certificates" data-tab-group="profile">شهاداتي</button>
+            <button onclick="switchTab('courses')" id="tab-courses" class="px-6 py-3 font-semibold text-primary border-b-2 border-primary">كورساتي</button>
+            <button onclick="switchTab('posts')" id="tab-posts" class="px-6 py-3 font-medium text-gray-500 hover:text-primary">منشوراتي</button>
+            <button onclick="switchTab('certificates')" id="tab-certificates" class="px-6 py-3 font-medium text-gray-500 hover:text-primary">شهاداتي</button>
         </div>
         
-        <!-- My Courses -->
-        <div id="courses" data-tab-content="profile">
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 card-hover">
-                    <img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=400&h=200&fit=crop" alt="Course" class="w-full h-40 object-cover">
-                    <div class="p-5">
+        <!-- Courses Tab -->
+        <div id="content-courses">
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100">
+                    <img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=400&h=200&fit=crop" alt="Course" class="w-full h-36 object-cover">
+                    <div class="p-4">
                         <h3 class="font-bold text-gray-900 mb-2">تعلم Python من الصفر</h3>
                         <div class="mb-3">
-                            <div class="flex justify-between text-sm mb-1"><span class="text-gray-500">التقدم</span><span class="font-medium text-primary">65%</span></div>
-                            <div class="h-2 bg-gray-100 rounded-full"><div class="h-full bg-primary rounded-full" style="width: 65%"></div></div>
+                            <div class="flex justify-between text-xs mb-1"><span class="text-gray-500">التقدم</span><span class="font-medium text-primary">65%</span></div>
+                            <div class="h-1.5 bg-gray-100 rounded-full"><div class="h-full bg-primary rounded-full" style="width: 65%"></div></div>
                         </div>
-                        <a href="course-viewer.html" class="text-primary font-medium hover:underline">متابعة</a>
+                        <a href="course-viewer.html" class="text-primary text-sm font-medium hover:underline">متابعة</a>
                     </div>
                 </div>
-                <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 card-hover">
-                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&h=200&fit=crop" alt="Course" class="w-full h-40 object-cover">
-                    <div class="p-5">
+                
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100">
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&h=200&fit=crop" alt="Course" class="w-full h-36 object-cover">
+                    <div class="p-4">
                         <h3 class="font-bold text-gray-900 mb-2">تصميم جرافيكي متقدم</h3>
                         <div class="mb-3">
-                            <div class="flex justify-between text-sm mb-1"><span class="text-gray-500">التقدم</span><span class="font-medium text-accent">40%</span></div>
-                            <div class="h-2 bg-gray-100 rounded-full"><div class="h-full bg-accent rounded-full" style="width: 40%"></div></div>
+                            <div class="flex justify-between text-xs mb-1"><span class="text-gray-500">التقدم</span><span class="font-medium text-accent">40%</span></div>
+                            <div class="h-1.5 bg-gray-100 rounded-full"><div class="h-full bg-accent rounded-full" style="width: 40%"></div></div>
                         </div>
-                        <a href="course-viewer.html" class="text-primary font-medium hover:underline">متابعة</a>
-                    </div>
-                </div>
-                <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 card-hover">
-                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=200&fit=crop" alt="Course" class="w-full h-40 object-cover">
-                    <div class="p-5">
-                        <h3 class="font-bold text-gray-900 mb-2">التسويق الرقمي</h3>
-                        <div class="mb-3">
-                            <div class="flex justify-between text-sm mb-1"><span class="text-gray-500">التقدم</span><span class="font-medium text-green-500">100%</span></div>
-                            <div class="h-2 bg-gray-100 rounded-full"><div class="h-full bg-green-500 rounded-full" style="width: 100%"></div></div>
-                        </div>
-                        <a href="#" class="text-green-600 font-medium hover:underline">عرض الشهادة</a>
+                        <a href="course-viewer.html" class="text-primary text-sm font-medium hover:underline">متابعة</a>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- My Posts -->
-        <div id="posts" data-tab-content="profile" class="hidden">
-            <div class="space-y-6">
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                    <div class="flex items-start gap-4">
-                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=50&h=50&fit=crop&crop=face" alt="User" class="w-10 h-10 rounded-full">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2"><h4 class="font-bold text-gray-900">أحمد محمد</h4><span class="text-gray-400">•</span><span class="text-gray-500 text-sm">منذ يوم</span></div>
-                            <p class="mt-2 text-gray-700">أتممت كورس التسويق الرقمي! شكراً لاستاذ خالد</p>
-                            <div class="mt-3 flex items-center gap-4">
-                                <button class="flex items-center gap-2 text-gray-500 hover:text-red-500"><i class="far fa-heart"></i><span>12</span></button>
-                                <button class="flex items-center gap-2 text-gray-500 hover:text-primary"><i class="far fa-comment"></i><span>5</span></button>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Posts Tab -->
+        <div id="content-posts" class="hidden space-y-4">
+            <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="text-gray-400">•</span>
+                    <span class="text-gray-500 text-sm">منذ يوم</span>
+                </div>
+                <p class="text-gray-700">أتممت كورس Python بنجاح! شكراً للأستاذ أحمد.</p>
+                <div class="mt-3 flex items-center gap-6 text-gray-500 text-sm">
+                    <span><i class="fas fa-heart ml-1"></i>24 إعجاب</span>
+                    <span><i class="fas fa-comment ml-1"></i>8 تعليقات</span>
                 </div>
             </div>
         </div>
         
-        <!-- Certificates -->
-        <div id="certificates" data-tab-content="profile" class="hidden">
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center gap-6">
-                    <div class="w-20 h-20 bg-accent/20 rounded-2xl flex items-center justify-center flex-shrink-0"><i class="fas fa-certificate text-accent text-3xl"></i></div>
-                    <div><h3 class="font-bold text-gray-900 mb-1">التسويق الرقمي الشامل</h3><p class="text-gray-500 text-sm">تاريخ الإصدار: 15 يناير 2024</p><a href="#" class="text-primary text-sm font-medium hover:underline">تحميل</a></div>
-                </div>
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center gap-6">
-                    <div class="w-20 h-20 bg-primary/20 rounded-2xl flex items-center justify-center flex-shrink-0"><i class="fas fa-certificate text-primary text-3xl"></i></div>
-                    <div><h3 class="font-bold text-gray-900 mb-1">أساسيات البرمجة</h3><p class="text-gray-500 text-sm">تاريخ الإصدار: 1 ديسمبر 2023</p><a href="#" class="text-primary text-sm font-medium hover:underline">تحميل</a></div>
+        <!-- Certificates Tab -->
+        <div id="content-certificates" class="hidden">
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-accent/20 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-certificate text-accent text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900">شهادة Python</h3>
+                            <p class="text-gray-500 text-sm">أُصدرت في 15 يناير 2024</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -159,15 +142,21 @@
 
     <script src="js/main.js"></script>
     <script>
-        const tabs = document.querySelectorAll('[data-tab-group="profile"]');
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => { t.classList.remove('text-primary', 'border-b-2', 'border-primary'); t.classList.add('text-gray-500'); });
-                tab.classList.remove('text-gray-500'); tab.classList.add('text-primary', 'border-b-2', 'border-primary');
-                document.querySelectorAll('[data-tab-content="profile"]').forEach(c => c.classList.add('hidden'));
-                document.getElementById(tab.dataset.tab).classList.remove('hidden');
-            });
-        });
+        function switchTab(tab) {
+            document.getElementById('content-courses').classList.add('hidden');
+            document.getElementById('content-posts').classList.add('hidden');
+            document.getElementById('content-certificates').classList.add('hidden');
+            document.getElementById('tab-courses').classList.replace('text-primary', 'text-gray-500');
+            document.getElementById('tab-courses').classList.remove('border-b-2', 'border-primary');
+            document.getElementById('tab-posts').classList.replace('text-primary', 'text-gray-500');
+            document.getElementById('tab-posts').classList.remove('border-b-2', 'border-primary');
+            document.getElementById('tab-certificates').classList.replace('text-primary', 'text-gray-500');
+            document.getElementById('tab-certificates').classList.remove('border-b-2', 'border-primary');
+            
+            document.getElementById('content-' + tab).classList.remove('hidden');
+            document.getElementById('tab-' + tab).classList.replace('text-gray-500', 'text-primary');
+            document.getElementById('tab-' + tab).classList.add('border-b-2', 'border-primary');
+        }
     </script>
 </body>
 </html>
