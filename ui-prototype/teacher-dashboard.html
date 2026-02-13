@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>لوحة المعلم - T3leem</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#3c5750",
+              accent: "#F2B600",
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Tajawal", sans-serif;
+      }
+      .sidebar {
+        transition: transform 0.3s ease;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Sidebar Overlay -->
+    <div
+      id="sidebar-overlay"
+      class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden"
+    ></div>
+
+    <!-- Sidebar -->
+    <aside
+      id="sidebar"
+      class="fixed top-0 right-0 h-full w-72 bg-white z-50 shadow-xl transform translate-x-full lg:translate-x-0 sidebar"
+    >
+      <div class="flex flex-col h-full">
+        <!-- Logo -->
+        <div class="p-6 border-b border-gray-100">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center"
+            >
+              <i class="fas fa-graduation-cap text-white text-xl"></i>
+            </div>
+            <span class="text-2xl font-bold text-primary">T3leem</span>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+          <a
+            href="teacher-dashboard.html"
+            class="flex items-center gap-3 px-4 py-3 bg-primary text-white rounded-2xl"
+          >
+            <i class="fas fa-home"></i>
+            <span>الرئيسية</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-2xl transition-colors"
+          >
+            <i class="fas fa-book"></i>
+            <span>كورساتي</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-2xl transition-colors"
+          >
+            <i class="fas fa-video"></i>
+            <span>الدروس المباشرة</span>
+          </a>
+          <a
+            href="community.html"
+            class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-2xl transition-colors"
+          >
+            <i class="fas fa-users"></i>
+            <span>الطلاب</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-2xl transition-colors"
+          >
+            <i class="fas fa-chart-line"></i>
+            <span>الإحصائيات</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-2xl transition-colors"
+          >
+            <i class="fas fa-wallet"></i>
+            <span>المالية</span>
+          </a>
+        </nav>
+
+        <!-- Bottom Section -->
+        <div class="p-4 border-t border-gray-100">
+          <a
+            href="profile.html"
+            class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-2xl transition-colors mb-2"
+          >
+            <i class="fas fa-user"></i>
+            <span>الملف الشخصي</span>
+          </a>
+          <a
+            href="settings.html"
+            class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-2xl transition-colors mb-2"
+          >
+            <i class="fas fa-cog"></i>
+            <span>الإعدادات</span>
+          </a>
+          <a
+            href="index.html"
+            class="flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 rounded-2xl transition-colors"
+          >
+            <i class="fas fa-sign-out-alt"></i>
+            <span>تسجيل الخروج</span>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="lg:mr-72">
+      <!-- Top Navbar -->
+      <header class="bg-white border-b border-gray-100 sticky top-0 z-30">
+        <div class="flex items-center justify-between h-20 px-6">
+          <button
+            id="sidebar-toggle"
+            class="lg:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-xl"
+          >
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+
+          <!-- Page Title -->
+          <h1 class="text-xl font-bold text-gray-900 hidden md:block">
+            لوحة التحكم
+          </h1>
+
+          <!-- Right Section -->
+          <div class="flex items-center gap-4">
+            <!-- Create Course Button -->
+            <button
+              class="hidden md:flex items-center gap-2 px-4 py-2 bg-accent text-gray-900 font-bold rounded-xl hover:bg-accent/90 transition-colors"
+            >
+              <i class="fas fa-plus"></i>
+              كورس جديد
+            </button>
+
+            <!-- Notifications -->
+            <div class="relative">
+              <button
+                class="p-3 text-gray-600 hover:bg-gray-100 rounded-xl relative"
+              >
+                <i class="fas fa-bell text-xl"></i>
+                <span
+                  class="absolute top-2 left-2 w-2 h-2 bg-red-500 rounded-full"
+                ></span>
+              </button>
+            </div>
+
+            <!-- Profile -->
+            <a
+              href="profile.html"
+              class="flex items-center gap-3 hover:bg-gray-100 rounded-xl p-2"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face"
+                alt="Profile"
+                class="w-10 h-10 rounded-full"
+              />
+              <div class="hidden md:block text-right">
+                <p class="text-sm font-bold text-gray-900">أحمد محمد</p>
+                <p class="text-xs text-primary">معلم</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Content -->
+      <main class="p-6">
+        <!-- Welcome Section -->
+        <div
+          class="bg-gradient-to-r from-primary to-primary/80 rounded-3xl p-8 text-white mb-8"
+        >
+          <div
+            class="flex flex-col md:flex-row items-center justify-between gap-6"
+          >
+            <div>
+              <h1 class="text-2xl font-bold mb-2">مرحباً، أحمد! 👋</h1>
+              <p class="text-white/80">لديك 3 كورسات نشطة و 150 طالب</p>
+            </div>
+            <button
+              class="px-6 py-3 bg-white text-primary font-bold rounded-2xl hover:bg-white/90 transition-colors"
+            >
+              <i class="fas fa-plus ml-2"></i>
+              إضافة كورس جديد
+            </button>
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div
+            class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
+          >
+            <div class="flex items-center justify-between mb-4">
+              <div
+                class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center"
+              >
+                <i class="fas fa-users text-primary text-xl"></i>
+              </div>
+              <span class="text-green-500 text-sm font-medium">+15%</span>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900">150</h3>
+            <p class="text-gray-500 text-sm">إجمالي الطلاب</p>
+          </div>
+
+          <div
+            class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
+          >
+            <div class="flex items-center justify-between mb-4">
+              <div
+                class="w-12 h-12 bg-accent/20 rounded-xl flex items-center justify-center"
+              >
+                <i class="fas fa-book text-accent text-xl"></i>
+              </div>
+              <span class="text-green-500 text-sm font-medium">+2</span>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900">8</h3>
+            <p class="text-gray-500 text-sm">كورسات نشطة</p>
+          </div>
+
+          <div
+            class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
+          >
+            <div class="flex items-center justify-between mb-4">
+              <div
+                class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center"
+              >
+                <i class="fas fa-star text-green-600 text-xl"></i>
+              </div>
+              <span class="text-green-500 text-sm font-medium">+0.2</span>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900">4.8</h3>
+            <p class="text-gray-500 text-sm">التقييم المتوسط</p>
+          </div>
+
+          <div
+            class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
+          >
+            <div class="flex items-center justify-between mb-4">
+              <div
+                class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center"
+              >
+                <i class="fas fa-money-bill-wave text-purple-600 text-xl"></i>
+              </div>
+              <span class="text-green-500 text-sm font-medium">+25%</span>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900">12,500</h3>
+            <p class="text-gray-500 text-sm">ريال هذا الشهر</p>
+          </div>
+        </div>
+
+        <!-- Course Management -->
+        <div
+          class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden"
+        >
+          <div
+            class="flex items-center justify-between p-6 border-b border-gray-100"
+          >
+            <h2 class="text-xl font-bold text-gray-900">إدارة الكورسات</h2>
+            <button
+              class="px-4 py-2 bg-primary text-white font-medium rounded-xl hover:bg-primary/90 transition-colors"
+            >
+              <i class="fas fa-plus ml-2"></i>
+              كورس جديد
+            </button>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th
+                    class="px-6 py-4 text-right text-sm font-medium text-gray-500"
+                  >
+                    الكورس
+                  </th>
+                  <th
+                    class="px-6 py-4 text-right text-sm font-medium text-gray-500"
+                  >
+                    الطلاب
+                  </th>
+                  <th
+                    class="px-6 py-4 text-right text-sm font-medium text-gray-500"
+                  >
+                    التقييم
+                  </th>
+                  <th
+                    class="px-6 py-4 text-right text-sm font-medium text-gray-500"
+                  >
+                    الدخل
+                  </th>
+                  <th
+                    class="px-6 py-4 text-right text-sm font-medium text-gray-500"
+                  >
+                    الحالة
+                  </th>
+                  <th
+                    class="px-6 py-4 text-right text-sm font-medium text-gray-500"
+                  >
+                    إجراءات
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr class="hover:bg-gray-50">
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-4">
+                      <img
+                        src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=80&h=60&fit=crop"
+                        alt="Course"
+                        class="w-16 h-12 object-cover rounded-lg"
+                      />
+                      <div>
+                        <h4 class="font-medium text-gray-900">
+                          تعلم Python من الصفر
+                        </h4>
+                        <p class="text-sm text-gray-500">آخر تحديث: قبل يوم</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span class="text-gray-900 font-medium">85</span>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-1">
+                      <i class="fas fa-star text-accent text-sm"></i>
+                      <span class="font-medium">4.9</span>
+                      <span class="text-gray-400">(120)</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span class="text-green-600 font-medium">5,200 ر.س</span>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span
+                      class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium"
+                      >نشط</span
+                    >
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-2">
+                      <button
+                        class="p-2 text-gray-500 hover:text-primary hover:bg-gray-100 rounded-lg"
+                        title="تعديل"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button
+                        class="p-2 text-gray-500 hover:text-blue-600 hover:bg-gray-100 rounded-lg"
+                        title="مشاهدة"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button
+                        class="p-2 text-gray-500 hover:text-red-500 hover:bg-gray-100 rounded-lg"
+                        title="حذف"
+                      >
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-gray-50">
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-4">
+                      <img
+                        src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=80&h=60&fit=crop"
+                        alt="Course"
+                        class="w-16 h-12 object-cover rounded-lg"
+                      />
+                      <div>
+                        <h4 class="font-medium text-gray-900">
+                          تصميم جرافيكي متقدم
+                        </h4>
+                        <p class="text-sm text-gray-500">
+                          آخر تحديث: قبل 3 أيام
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span class="text-gray-900 font-medium">45</span>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-1">
+                      <i class="fas fa-star text-accent text-sm"></i>
+                      <span class="font-medium">4.7</span>
+                      <span class="text-gray-400">(65)</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span class="text-green-600 font-medium">3,800 ر.س</span>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span
+                      class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium"
+                      >نشط</span
+                    >
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-2">
+                      <button
+                        class="p-2 text-gray-500 hover:text-primary hover:bg-gray-100 rounded-lg"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button
+                        class="p-2 text-gray-500 hover:text-blue-600 hover:bg-gray-100 rounded-lg"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button
+                        class="p-2 text-gray-500 hover:text-red-500 hover:bg-gray-100 rounded-lg"
+                      >
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-gray-50">
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-4">
+                      <img
+                        src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=80&h=60&fit=crop"
+                        alt="Course"
+                        class="w-16 h-12 object-cover rounded-lg"
+                      />
+                      <div>
+                        <h4 class="font-medium text-gray-900">
+                          التسويق الرقمي الشامل
+                        </h4>
+                        <p class="text-sm text-gray-500">
+                          آخر تحديث: قبل أسبوع
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span class="text-gray-900 font-medium">20</span>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-1">
+                      <i class="fas fa-star text-accent text-sm"></i>
+                      <span class="font-medium">4.5</span>
+                      <span class="text-gray-400">(30)</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span class="text-green-600 font-medium">2,500 ر.س</span>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span
+                      class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-medium"
+                      >قيد المراجعة</span
+                    >
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-2">
+                      <button
+                        class="p-2 text-gray-500 hover:text-primary hover:bg-gray-100 rounded-lg"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button
+                        class="p-2 text-gray-500 hover:text-blue-600 hover:bg-gray-100 rounded-lg"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button
+                        class="p-2 text-gray-500 hover:text-red-500 hover:bg-gray-100 rounded-lg"
+                      >
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div
+            class="flex items-center justify-between p-6 border-t border-gray-100"
+          >
+            <p class="text-gray-500 text-sm">عرض 1-3 من 8 كورسات</p>
+            <div class="flex items-center gap-2">
+              <button class="p-2 text-gray-500 hover:bg-gray-100 rounded-lg">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+              <button
+                class="px-3 py-1 bg-primary text-white rounded-lg text-sm"
+              >
+                1
+              </button>
+              <button
+                class="px-3 py-1 text-gray-500 hover:bg-gray-100 rounded-lg text-sm"
+              >
+                2
+              </button>
+              <button
+                class="px-3 py-1 text-gray-500 hover:bg-gray-100 rounded-lg text-sm"
+              >
+                3
+              </button>
+              <button class="p-2 text-gray-500 hover:bg-gray-100 rounded-lg">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
