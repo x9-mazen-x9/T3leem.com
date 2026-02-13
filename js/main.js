@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initCourseViewer();
   initCommunity();
   initNotifications();
+  initPostCreation();
 });
 
 // ==================== SIDEBAR FUNCTIONALITY ====================
@@ -22,6 +23,7 @@ function initSidebar() {
   if (sidebarToggle && sidebar) {
     sidebarToggle.addEventListener("click", () => {
       sidebar.classList.toggle("-translate-x-full");
+      sidebar.classList.toggle("translate-x-0");
       if (overlay) {
         overlay.classList.toggle("hidden");
       }
@@ -30,20 +32,10 @@ function initSidebar() {
     if (overlay) {
       overlay.addEventListener("click", () => {
         sidebar.classList.add("-translate-x-full");
+        sidebar.classList.remove("translate-x-0");
         overlay.classList.add("hidden");
       });
     }
-  }
-
-  // Mobile menu toggle
-  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
-  if (mobileMenuBtn && sidebar) {
-    mobileMenuBtn.addEventListener("click", () => {
-      sidebar.classList.toggle("-translate-x-full");
-      if (overlay) {
-        overlay.classList.toggle("hidden");
-      }
-    });
   }
 }
 
@@ -124,13 +116,13 @@ function initTabs() {
       document
         .querySelectorAll(`[data-tab-group="${tabGroup}"]`)
         .forEach((btn) => {
-          btn.classList.remove("bg-[#3c5750]", "text-white");
-          btn.classList.add("text-gray-600", "hover:bg-gray-100");
+          btn.classList.remove("text-primary", "border-b-2", "border-primary");
+          btn.classList.add("text-gray-500");
         });
 
       // Add active class to clicked button
-      button.classList.add("bg-[#3c5750]", "text-white");
-      button.classList.remove("text-gray-600", "hover:bg-gray-100");
+      button.classList.add("text-primary", "border-b-2", "border-primary");
+      button.classList.remove("text-gray-500");
 
       // Hide all tab contents in this group
       document
@@ -175,10 +167,9 @@ function initImagePreview() {
 function initCourseViewer() {
   const videoContainer = document.getElementById("video-container");
   const playBtn = document.getElementById("play-btn");
+  const playBtnBottom = document.getElementById("play-btn-bottom");
   const progressBar = document.getElementById("progress-bar");
-  const volumeSlider = document.getElementById("volume-slider");
   const fullscreenBtn = document.getElementById("fullscreen-btn");
-  const lessonItems = document.querySelectorAll(".lesson-item");
   const nextLessonPopup = document.getElementById("next-lesson-popup");
 
   let isPlaying = false;
@@ -194,12 +185,27 @@ function initCourseViewer() {
     });
   }
 
+  if (playBtnBottom) {
+    playBtnBottom.addEventListener("click", () => {
+      isPlaying = !isPlaying;
+      updatePlayPauseIcon();
+      simulateVideoProgress();
+    });
+  }
+
   function updatePlayPauseIcon() {
-    const icon = playBtn.querySelector("i");
+    const icon = playBtn ? playBtn.querySelector("i") : null;
+    const iconBottom = playBtnBottom ? playBtnBottom.querySelector("i") : null;
+
     if (icon) {
       icon.className = isPlaying
-        ? "fas fa-pause text-2xl"
-        : "fas fa-play text-2xl";
+        ? "fas fa-pause text-4xl"
+        : "fas fa-play text-4xl ml-2";
+    }
+    if (iconBottom) {
+      iconBottom.className = isPlaying
+        ? "fas fa-pause text-xl"
+        : "fas fa-play text-xl";
     }
   }
 
@@ -239,63 +245,26 @@ function initCourseViewer() {
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   }
 
-  // Volume control
-  if (volumeSlider) {
-    volumeSlider.addEventListener("input", function () {
-      const volume = this.value;
-      console.log("Volume:", volume);
-    });
-  }
-
   // Fullscreen
-  if (fullscreenBtn) {
+  if (fullscreenBtn && videoContainer) {
     fullscreenBtn.addEventListener("click", () => {
-      if (videoContainer) {
-        if (document.fullscreenElement) {
-          document.exitFullscreen();
-        } else {
-          videoContainer.requestFullscreen();
-        }
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        videoContainer.requestFullscreen();
       }
     });
   }
-
-  // Lesson navigation
-  lessonItems.forEach((item) => {
-    item.addEventListener("click", function () {
-      lessonItems.forEach((l) => l.classList.remove("bg-[#3c5750]"));
-      lessonItems.forEach((l) => l.classList.add("hover:bg-gray-700"));
-
-      this.classList.add("bg-[#3c5750]");
-      this.classList.remove("hover:bg-gray-700");
-
-      const lessonTitle = this.querySelector("h4");
-      if (lessonTitle) {
-        const videoTitle = document.getElementById("video-title");
-        if (videoTitle) videoTitle.textContent = lessonTitle.textContent;
-      }
-
-      currentTime = 0;
-      isPlaying = false;
-      updatePlayPauseIcon();
-      updateProgress();
-    });
-  });
 
   // Skip next lesson
   const skipNextBtn = document.getElementById("skip-next-btn");
   if (skipNextBtn && nextLessonPopup) {
     skipNextBtn.addEventListener("click", () => {
       nextLessonPopup.classList.add("hidden");
-      const activeLesson = document.querySelector(
-        ".lesson-item.bg-\\[\\#3c5750\\]",
-      );
-      if (activeLesson && activeLesson.nextElementSibling) {
-        activeLesson.nextElementSibling.click();
-        isPlaying = true;
-        updatePlayPauseIcon();
-        simulateVideoProgress();
-      }
+      currentTime = 0;
+      isPlaying = false;
+      updatePlayPauseIcon();
+      updateProgress();
     });
   }
 
@@ -308,9 +277,10 @@ function initCourseViewer() {
   }
 }
 
-// ==================== COMMUNITY PAGE FUNCTIONALITY ====================
-function initCommunity() {
+// ==================== COMMUNITY POST CREATION ====================
+function initPostCreation() {
   const createPostBox = document.getElementById("create-post-box");
+  const postForm = document.getElementById("post-form");
   const postContent = document.getElementById("post-content");
   const postImageInput = document.getElementById("post-image");
   const imagePreviewContainer = document.getElementById(
@@ -321,14 +291,10 @@ function initCommunity() {
   const postsFeed = document.getElementById("posts-feed");
 
   // Focus on post box
-  if (createPostBox && postContent) {
+  if (createPostBox && postForm) {
     createPostBox.addEventListener("click", () => {
-      postContent.focus();
-      createPostBox.classList.add("ring-2", "ring-[#3c5750]");
-    });
-
-    postContent.addEventListener("blur", () => {
-      createPostBox.classList.remove("ring-2", "ring-[#3c5750]");
+      postForm.classList.remove("hidden");
+      if (postContent) postContent.focus();
     });
   }
 
@@ -345,6 +311,7 @@ function initCommunity() {
       }
     });
 
+    // Remove image button
     const removeImageBtn = document.getElementById("remove-post-image");
     if (removeImageBtn) {
       removeImageBtn.addEventListener("click", () => {
@@ -360,29 +327,29 @@ function initCommunity() {
     submitPostBtn.addEventListener("click", () => {
       const content = postContent ? postContent.value : "";
       const hasImage =
-        !imagePreviewContainer ||
-        imagePreviewContainer.classList.contains("hidden") === false;
+        imagePreviewContainer &&
+        !imagePreviewContainer.classList.contains("hidden");
 
       if (!content.trim() && !hasImage) {
-        alert("Please add some content or an image to your post.");
+        alert("الرجاء إضافة محتوى أو صورة للمنشور");
         return;
       }
 
+      // Create new post HTML
       const newPost = document.createElement("div");
       newPost.className =
         "bg-white rounded-2xl p-6 shadow-sm border border-gray-100";
 
-      const timestamp = "Just now";
-      const userName = "Ahmed Hassan";
+      const timestamp = "الآن";
+      const userName = "أحمد محمد";
       const userAvatar =
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face";
+        "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face";
 
       let imageHtml = "";
-      if (hasImage) {
-        const imageSrc = postImagePreview ? postImagePreview.src : "";
+      if (hasImage && postImagePreview) {
         imageHtml = `
                     <div class="mt-4 rounded-xl overflow-hidden">
-                        <img src="${imageSrc}" alt="Post image" class="w-full h-64 object-cover">
+                        <img src="${postImagePreview.src}" alt="Post image" class="w-full h-64 object-cover">
                     </div>
                 `;
       }
@@ -392,30 +359,31 @@ function initCommunity() {
                     <img src="${userAvatar}" alt="${userName}" class="w-12 h-12 rounded-full object-cover">
                     <div class="flex-1">
                         <div class="flex items-center gap-2">
-                            <h4 class="font-semibold text-gray-900">${userName}</h4>
+                            <h4 class="font-bold text-gray-900">${userName}</h4>
                             <span class="text-gray-400">•</span>
                             <span class="text-gray-500 text-sm">${timestamp}</span>
                         </div>
                         <p class="mt-2 text-gray-700">${content}</p>
                         ${imageHtml}
                         <div class="mt-4 flex items-center gap-6">
-                            <button class="flex items-center gap-2 text-gray-500 hover:text-[#3c5750] transition-colors like-btn">
+                            <button class="flex items-center gap-2 text-gray-500 hover:text-red-500 transition-colors like-btn">
                                 <i class="far fa-heart"></i>
                                 <span class="like-count">0</span>
                             </button>
-                            <button class="flex items-center gap-2 text-gray-500 hover:text-[#3c5750] transition-colors">
+                            <button class="flex items-center gap-2 text-gray-500 hover:text-primary transition-colors">
                                 <i class="far fa-comment"></i>
-                                <span>Comment</span>
+                                <span>تعليق</span>
                             </button>
-                            <button class="flex items-center gap-2 text-gray-500 hover:text-[#3c5750] transition-colors">
+                            <button class="flex items-center gap-2 text-gray-500 hover:text-primary transition-colors">
                                 <i class="far fa-share-square"></i>
-                                <span>Share</span>
+                                <span>مشاركة</span>
                             </button>
                         </div>
                     </div>
                 </div>
             `;
 
+      // Add like functionality to new post
       const likeBtn = newPost.querySelector(".like-btn");
       if (likeBtn) {
         likeBtn.addEventListener("click", function () {
@@ -424,24 +392,27 @@ function initCommunity() {
           let count = parseInt(countEl.textContent);
 
           if (icon.classList.contains("far")) {
-            icon.classList.remove("far");
+            icon.classList.remove("far", "text-gray-500");
             icon.classList.add("fas", "text-red-500");
             count++;
           } else {
             icon.classList.remove("fas", "text-red-500");
-            icon.classList.add("far");
+            icon.classList.add("far", "text-gray-500");
             count--;
           }
           countEl.textContent = count;
         });
       }
 
+      // Insert at the top of feed
       postsFeed.insertBefore(newPost, postsFeed.firstChild);
 
+      // Reset form
       if (postContent) postContent.value = "";
       if (imagePreviewContainer) imagePreviewContainer.classList.add("hidden");
       if (postImagePreview) postImagePreview.src = "";
       if (postImageInput) postImageInput.value = "";
+      if (postForm) postForm.classList.add("hidden");
     });
   }
 
@@ -453,12 +424,12 @@ function initCommunity() {
       let count = parseInt(countEl.textContent);
 
       if (icon.classList.contains("far")) {
-        icon.classList.remove("far");
+        icon.classList.remove("far", "text-gray-500");
         icon.classList.add("fas", "text-red-500");
         count++;
       } else {
         icon.classList.remove("fas", "text-red-500");
-        icon.classList.add("far");
+        icon.classList.add("far", "text-gray-500");
         count--;
       }
       countEl.textContent = count;
@@ -481,6 +452,7 @@ function initNotifications() {
     });
   });
 
+  // Close notifications on outside click
   document.addEventListener("click", function (e) {
     document.querySelectorAll('[id^="notification-"]').forEach((notif) => {
       if (
@@ -492,87 +464,3 @@ function initNotifications() {
     });
   });
 }
-
-// ==================== SEARCH FUNCTIONALITY ====================
-function initSearch() {
-  const searchInputs = document.querySelectorAll("[data-search-input]");
-
-  searchInputs.forEach((input) => {
-    input.addEventListener("input", function () {
-      const searchTerm = this.value.toLowerCase();
-      const targetId = this.dataset.searchInput;
-      const targetContainer = document.getElementById(targetId);
-
-      if (targetContainer) {
-        const items = targetContainer.querySelectorAll("[data-search-item]");
-
-        items.forEach((item) => {
-          const text = item.textContent.toLowerCase();
-          if (text.includes(searchTerm)) {
-            item.classList.remove("hidden");
-          } else {
-            item.classList.add("hidden");
-          }
-        });
-      }
-    });
-  });
-}
-
-// ==================== SMOOTH SCROLL ====================
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-  anchor.addEventListener("click", function (e) {
-    const href = this.getAttribute("href");
-    if (href !== "#") {
-      e.preventDefault();
-      const target = document.querySelector(href);
-      if (target) {
-        target.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
-    }
-  });
-});
-
-// ==================== ANIMATIONS ON SCROLL ====================
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: "0px 0px -50px 0px",
-};
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("animate-fade-in");
-      observer.unobserve(entry.target);
-    }
-  });
-}, observerOptions);
-
-document.querySelectorAll(".animate-on-scroll").forEach((el) => {
-  observer.observe(el);
-});
-
-// ==================== TOAST NOTIFICATIONS ====================
-function showToast(message, type = "success") {
-  const toast = document.createElement("div");
-  toast.className = `fixed bottom-4 right-4 px-6 py-3 rounded-xl shadow-lg transform transition-all duration-300 translate-y-20 opacity-0 z-50 ${
-    type === "success" ? "bg-[#3c5750] text-white" : "bg-red-500 text-white"
-  }`;
-  toast.textContent = message;
-
-  document.body.appendChild(toast);
-
-  setTimeout(() => {
-    toast.classList.remove("translate-y-20", "opacity-0");
-  }, 100);
-
-  setTimeout(() => {
-    toast.classList.add("translate-y-20", "opacity-0");
-    setTimeout(() => toast.remove(), 300);
-  }, 3000);
-}
-
-initSearch();

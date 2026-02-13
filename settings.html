@@ -1,598 +1,177 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>الإعدادات - T3leem</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: "#3c5750",
-              accent: "#F2B600",
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: "#3c5750", accent: "#F2B600" },
+                },
             },
-          },
-        },
-      };
+        };
     </script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-      body {
-        font-family: "Tajawal", sans-serif;
-      }
+        body { font-family: "Tajawal", sans-serif; }
+        .btn-glow { transition: all 0.3s ease; }
+        .btn-glow:hover { box-shadow: 0 0 25px rgba(60, 87, 80, 0.3); transform: translateY(-2px); }
+        .input-animated { transition: all 0.3s ease; }
+        .input-animated:focus { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(60, 87, 80, 0.2); }
     </style>
-  </head>
-  <body class="bg-gray-50">
-    <!-- Sidebar Overlay -->
-    <div
-      id="sidebar-overlay"
-      class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden"
-    ></div>
-
-    <!-- Sidebar -->
-    <aside
-      id="sidebar"
-      class="fixed top-0 right-0 h-full w-72 bg-white z-50 shadow-xl transform translate-x-full lg:translate-x-0"
-    >
-      <div class="flex flex-col h-full">
-        <!-- Logo -->
-        <div class="p-6 border-b border-gray-100">
-          <div class="flex items-center gap-3">
-            <div
-              class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center"
-            >
-              <i class="fas fa-graduation-cap text-white text-xl"></i>
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-white/80 backdrop-blur-xl border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">T3leem</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="student-dashboard.html" class="text-gray-600 hover:text-primary"><i class="fas fa-home text-xl"></i></a>
+                    <a href="profile.html" class="text-gray-600 hover:text-primary"><i class="fas fa-user text-xl"></i></a>
+                </div>
             </div>
-            <span class="text-2xl font-bold text-primary">T3leem</span>
-          </div>
         </div>
+    </nav>
 
-        <!-- Navigation -->
-        <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
-          <a
-            href="student-dashboard.html"
-            class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-2xl transition-colors"
-          >
-            <i class="fas fa-home"></i>
-            <span>الرئيسية</span>
-          </a>
-          <a
-            href="courses.html"
-            class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-2xl transition-colors"
-          >
-            <i class="fas fa-book-open"></i>
-            <span>الكورسات</span>
-          </a>
-          <a
-            href="community.html"
-            class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-2xl transition-colors"
-          >
-            <i class="fas fa-users"></i>
-            <span>المجتمع</span>
-          </a>
-          <a
-            href="profile.html"
-            class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-2xl transition-colors"
-          >
-            <i class="fas fa-user"></i>
-            <span>الملف الشخصي</span>
-          </a>
-        </nav>
-
-        <!-- Bottom Section -->
-        <div class="p-4 border-t border-gray-100">
-          <a
-            href="settings.html"
-            class="flex items-center gap-3 px-4 py-3 bg-primary text-white rounded-2xl mb-2"
-          >
-            <i class="fas fa-cog"></i>
-            <span>الإعدادات</span>
-          </a>
-          <a
-            href="index.html"
-            class="flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 rounded-2xl transition-colors"
-          >
-            <i class="fas fa-sign-out-alt"></i>
-            <span>تسجيل الخروج</span>
-          </a>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Main Content -->
-    <div class="lg:mr-72">
-      <!-- Top Navbar -->
-      <header class="bg-white border-b border-gray-100 sticky top-0 z-30">
-        <div class="flex items-center justify-between h-20 px-6">
-          <button
-            id="sidebar-toggle"
-            class="lg:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-xl"
-          >
-            <i class="fas fa-bars text-xl"></i>
-          </button>
-
-          <h1 class="text-xl font-bold text-gray-900 hidden md:block">
-            الإعدادات
-          </h1>
-
-          <!-- Right Section -->
-          <div class="flex items-center gap-4">
-            <button
-              class="p-3 text-gray-600 hover:bg-gray-100 rounded-xl relative"
-            >
-              <i class="fas fa-bell text-xl"></i>
-              <span
-                class="absolute top-2 left-2 w-2 h-2 bg-red-500 rounded-full"
-              ></span>
-            </button>
-            <a
-              href="profile.html"
-              class="flex items-center gap-3 hover:bg-gray-100 rounded-xl p-2"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=50&h=50&fit=crop&crop=face"
-                alt="Profile"
-                class="w-10 h-10 rounded-full"
-              />
-            </a>
-          </div>
-        </div>
-      </header>
-
-      <!-- Settings Content -->
-      <main class="p-6">
-        <div class="max-w-4xl mx-auto">
-          <!-- Settings Tabs -->
-          <div
-            class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden"
-          >
-            <div class="flex border-b border-gray-100">
-              <button
-                class="flex-1 px-6 py-4 text-center font-medium text-primary border-b-2 border-primary"
-                data-tab="profile"
-                data-tab-group="settings"
-              >
-                <i class="fas fa-user ml-2"></i>
-                الملف الشخصي
-              </button>
-              <button
-                class="flex-1 px-6 py-4 text-center font-medium text-gray-500 hover:text-gray-900"
-                data-tab="account"
-                data-tab-group="settings"
-              >
-                <i class="fas fa-cog ml-2"></i>
-                الحساب
-              </button>
-              <button
-                class="flex-1 px-6 py-4 text-center font-medium text-gray-500 hover:text-gray-900"
-                data-tab="notifications"
-                data-tab-group="settings"
-              >
-                <i class="fas fa-bell ml-2"></i>
-                الإشعارات
-              </button>
-              <button
-                class="flex-1 px-6 py-4 text-center font-medium text-gray-500 hover:text-gray-900"
-                data-tab="privacy"
-                data-tab-group="settings"
-              >
-                <i class="fas fa-shield-alt ml-2"></i>
-                الخصوصية
-              </button>
-            </div>
-
-            <!-- Tab Contents -->
-            <div class="p-6">
-              <!-- Profile Tab -->
-              <div data-tab-content="settings" id="profile">
-                <form class="space-y-6">
-                  <!-- Profile Picture -->
-                  <div
-                    class="flex items-center gap-6 pb-6 border-b border-gray-100"
-                  >
+    <!-- Main -->
+    <main class="max-w-4xl mx-auto px-4 py-12">
+        <h1 class="text-3xl font-bold text-gray-900 mb-8">الإعدادات</h1>
+        
+        <div class="space-y-6">
+            <!-- Profile Settings -->
+            <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-6">معلومات الملف الشخصي</h2>
+                <div class="flex items-center gap-6 mb-6">
                     <div class="relative">
-                      <img
-                        id="profile-preview"
-                        src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop&crop=face"
-                        alt="Profile"
-                        class="w-24 h-24 rounded-2xl shadow-lg"
-                      />
-                      <label
-                        class="absolute bottom-0 left-0 w-8 h-8 bg-primary text-white rounded-xl flex items-center justify-center cursor-pointer hover:bg-primary/90"
-                      >
-                        <i class="fas fa-camera text-sm"></i>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          class="hidden"
-                          data-image-preview="profile-preview"
-                        />
-                      </label>
+                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face" alt="Profile" class="w-24 h-24 rounded-full shadow-lg">
+                        <label class="absolute bottom-0 left-0 w-8 h-8 bg-accent rounded-full flex items-center justify-center text-gray-900 cursor-pointer hover:scale-110 transition-transform">
+                            <i class="fas fa-camera text-sm"></i>
+                            <input type="file" accept="image/*" class="hidden" data-image-preview="profile-preview">
+                        </label>
                     </div>
                     <div>
-                      <h3 class="font-bold text-gray-900">صورة الملف الشخصي</h3>
-                      <p class="text-gray-500 text-sm">
-                        JPG, GIF أو PNG. حجم أقصى 1MB
-                      </p>
+                        <h3 class="font-bold text-gray-900">صورة الملف الشخصي</h3>
+                        <p class="text-gray-500 text-sm">JPG, PNG أو GIF. الحد الأقصى 2MB</p>
                     </div>
-                  </div>
-
-                  <!-- Personal Info -->
-                  <div class="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label
-                        class="block text-sm font-medium text-gray-700 mb-2"
-                        >الاسم الأول</label
-                      >
-                      <input
-                        type="text"
-                        value="أحمد"
-                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        class="block text-sm font-medium text-gray-700 mb-2"
-                        >اسم العائلة</label
-                      >
-                      <input
-                        type="text"
-                        value="محمد"
-                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        class="block text-sm font-medium text-gray-700 mb-2"
-                        >البريد الإلكتروني</label
-                      >
-                      <input
-                        type="email"
-                        value="ahmed@example.com"
-                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        class="block text-sm font-medium text-gray-700 mb-2"
-                        >رقم الهاتف</label
-                      >
-                      <input
-                        type="tel"
-                        value="+966 55 123 4567"
-                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                      />
-                    </div>
-                    <div class="md:col-span-2">
-                      <label
-                        class="block text-sm font-medium text-gray-700 mb-2"
-                        >الموقع</label
-                      >
-                      <input
-                        type="text"
-                        value="الرياض، السعودية"
-                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                      />
-                    </div>
-                    <div class="md:col-span-2">
-                      <label
-                        class="block text-sm font-medium text-gray-700 mb-2"
-                        >نبذة عنك</label
-                      >
-                      <textarea
-                        rows="3"
-                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                      >
-طالب برمجة مهتم بتعلم لغات البرمجة الحديثة</textarea
-                      >
-                    </div>
-                  </div>
-
-                  <div class="flex justify-end">
-                    <button
-                      type="submit"
-                      class="px-8 py-3 bg-primary text-white font-bold rounded-2xl hover:bg-primary/90"
-                    >
-                      حفظ التغييرات
-                    </button>
-                  </div>
-                </form>
-              </div>
-
-              <!-- Account Tab -->
-              <div data-tab-content="settings" id="account" class="hidden">
-                <form class="space-y-6">
-                  <div>
-                    <h3 class="font-bold text-gray-900 mb-4">
-                      تغيير كلمة المرور
-                    </h3>
-                    <div class="space-y-4">
-                      <div>
-                        <label
-                          class="block text-sm font-medium text-gray-700 mb-2"
-                          >كلمة المرور الحالية</label
-                        >
-                        <input
-                          type="password"
-                          class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                        />
-                      </div>
-                      <div>
-                        <label
-                          class="block text-sm font-medium text-gray-700 mb-2"
-                          >كلمة المرور الجديدة</label
-                        >
-                        <input
-                          type="password"
-                          class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                        />
-                      </div>
-                      <div>
-                        <label
-                          class="block text-sm font-medium text-gray-700 mb-2"
-                          >تأكيد كلمة المرور</label
-                        >
-                        <input
-                          type="password"
-                          class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="pt-6 border-t border-gray-100">
-                    <h3 class="font-bold text-gray-900 mb-4">حذف الحساب</h3>
-                    <p class="text-gray-500 mb-4">
-                      بعد حذف حسابك، سيتم فقدان جميع بياناتك نهائياً.
-                    </p>
-                    <button
-                      type="button"
-                      class="px-6 py-2 border border-red-500 text-red-500 font-medium rounded-xl hover:bg-red-50"
-                    >
-                      <i class="fas fa-trash ml-2"></i>
-                      حذف الحساب
-                    </button>
-                  </div>
-
-                  <div class="flex justify-end">
-                    <button
-                      type="submit"
-                      class="px-8 py-3 bg-primary text-white font-bold rounded-2xl hover:bg-primary/90"
-                    >
-                      حفظ التغييرات
-                    </button>
-                  </div>
-                </form>
-              </div>
-
-              <!-- Notifications Tab -->
-              <div
-                data-tab-content="settings"
-                id="notifications"
-                class="hidden"
-              >
-                <div class="space-y-6">
-                  <div
-                    class="flex items-center justify-between py-4 border-b border-gray-100"
-                  >
-                    <div>
-                      <h3 class="font-bold text-gray-900">
-                        إشعارات البريد الإلكتروني
-                      </h3>
-                      <p class="text-gray-500 text-sm">
-                        تلقي إشعارات عبر البريد الإلكتروني
-                      </p>
-                    </div>
-                    <label
-                      class="relative inline-flex items-center cursor-pointer"
-                    >
-                      <input type="checkbox" class="sr-only peer" checked />
-                      <div
-                        class="w-14 h-7 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:right-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary"
-                      ></div>
-                    </label>
-                  </div>
-
-                  <div
-                    class="flex items-center justify-between py-4 border-b border-gray-100"
-                  >
-                    <div>
-                      <h3 class="font-bold text-gray-900">إشعارات الكورسات</h3>
-                      <p class="text-gray-500 text-sm">
-                        إشعارات عند إضافة كورسات جديدة
-                      </p>
-                    </div>
-                    <label
-                      class="relative inline-flex items-center cursor-pointer"
-                    >
-                      <input type="checkbox" class="sr-only peer" checked />
-                      <div
-                        class="w-14 h-7 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:right-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary"
-                      ></div>
-                    </label>
-                  </div>
-
-                  <div
-                    class="flex items-center justify-between py-4 border-b border-gray-100"
-                  >
-                    <div>
-                      <h3 class="font-bold text-gray-900">إشعارات الترقية</h3>
-                      <p class="text-gray-500 text-sm">
-                        إشعارات عند تقدمك في الكورس
-                      </p>
-                    </div>
-                    <label
-                      class="relative inline-flex items-center cursor-pointer"
-                    >
-                      <input type="checkbox" class="sr-only peer" checked />
-                      <div
-                        class="w-14 h-7 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:right-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary"
-                      ></div>
-                    </label>
-                  </div>
-
-                  <div class="flex items-center justify-between py-4">
-                    <div>
-                      <h3 class="font-bold text-gray-900">الرسائل المباشرة</h3>
-                      <p class="text-gray-500 text-sm">
-                        إشعارات عند تلقي رسائل جديدة
-                      </p>
-                    </div>
-                    <label
-                      class="relative inline-flex items-center cursor-pointer"
-                    >
-                      <input type="checkbox" class="sr-only peer" />
-                      <div
-                        class="w-14 h-7 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:right-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary"
-                      ></div>
-                    </label>
-                  </div>
                 </div>
-              </div>
-
-              <!-- Privacy Tab -->
-              <div data-tab-content="settings" id="privacy" class="hidden">
-                <div class="space-y-6">
-                  <div
-                    class="flex items-center justify-between py-4 border-b border-gray-100"
-                  >
+                <div class="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h3 class="font-bold text-gray-900">
-                        الملف الشخصي العام
-                      </h3>
-                      <p class="text-gray-500 text-sm">
-                        السماح للآخرين برؤية ملفك الشخصي
-                      </p>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">الاسم الأول</label>
+                        <input type="text" value="أحمد" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 input-animated">
                     </div>
-                    <label
-                      class="relative inline-flex items-center cursor-pointer"
-                    >
-                      <input type="checkbox" class="sr-only peer" checked />
-                      <div
-                        class="w-14 h-7 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:right-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary"
-                      ></div>
-                    </label>
-                  </div>
-
-                  <div
-                    class="flex items-center justify-between py-4 border-b border-gray-100"
-                  >
                     <div>
-                      <h3 class="font-bold text-gray-900">
-                        إظهار معلومات التواصل
-                      </h3>
-                      <p class="text-gray-500 text-sm">
-                        السماح بإظهار بريدك الإلكتروني ورقم هاتفك
-                      </p>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">اسم العائلة</label>
+                        <input type="text" value="محمد" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 input-animated">
                     </div>
-                    <label
-                      class="relative inline-flex items-center cursor-pointer"
-                    >
-                      <input type="checkbox" class="sr-only peer" />
-                      <div
-                        class="w-14 h-7 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:right-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary"
-                      ></div>
-                    </label>
-                  </div>
-
-                  <div
-                    class="flex items-center justify-between py-4 border-b border-gray-100"
-                  >
                     <div>
-                      <h3 class="font-bold text-gray-900">
-                        إظهار الكورسات المسجلة
-                      </h3>
-                      <p class="text-gray-500 text-sm">
-                        السماح للآخرين برؤية كورساتك
-                      </p>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">البريد الإلكتروني</label>
+                        <input type="email" value="ahmed@example.com" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 input-animated">
                     </div>
-                    <label
-                      class="relative inline-flex items-center cursor-pointer"
-                    >
-                      <input type="checkbox" class="sr-only peer" checked />
-                      <div
-                        class="w-14 h-7 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:right-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary"
-                      ></div>
-                    </label>
-                  </div>
-
-                  <div class="pt-4">
-                    <h3 class="font-bold text-gray-900 mb-4">Sessions نشطة</h3>
-                    <div class="bg-gray-50 rounded-xl p-4 space-y-3">
-                      <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                          <i class="fas fa-laptop text-primary"></i>
-                          <div>
-                            <p class="font-medium text-gray-900">
-                              Chrome - Windows
-                            </p>
-                            <p class="text-gray-500 text-sm">آخر نشاط: الآن</p>
-                          </div>
-                        </div>
-                        <span class="text-green-500 text-sm font-medium"
-                          >نشط</span
-                        >
-                      </div>
-                      <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                          <i class="fas fa-mobile-alt text-gray-400"></i>
-                          <div>
-                            <p class="font-medium text-gray-900">
-                              Safari - iPhone
-                            </p>
-                            <p class="text-gray-500 text-sm">
-                              آخر نشاط: قبل ساعتين
-                            </p>
-                          </div>
-                        </div>
-                        <button
-                          class="text-red-500 text-sm font-medium hover:underline"
-                        >
-                          تسجيل خروج
-                        </button>
-                      </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">رقم الهاتف</label>
+                        <input type="tel" value="+966 55 123 4567" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 input-animated">
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
-          </div>
+            
+            <!-- Account Settings -->
+            <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-6">إعدادات الحساب</h2>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                        <div>
+                            <h3 class="font-medium text-gray-900">اللغة</h3>
+                            <p class="text-gray-500 text-sm">اختر لغة الواجهة</p>
+                        </div>
+                        <select class="px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl">
+                            <option>العربية</option>
+                            <option>English</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                        <div>
+                            <h3 class="font-medium text-gray-900">الإشعارات</h3>
+                            <p class="text-gray-500 text-sm">تلقي إشعارات بالبريد الإلكتروني</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer" checked>
+                            <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:right-[2px] after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary"></div>
+                        </label>
+                    </div>
+                    <div class="flex items-center justify-between py-3">
+                        <div>
+                            <h3 class="font-medium text-gray-900">النشرة الإخبارية</h3>
+                            <p class="text-gray-500 text-sm">تلقي آخر الأخبار والتحديثات</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer">
+                            <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:right-[2px] after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Security -->
+            <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-6">الأمان</h2>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                        <div>
+                            <h3 class="font-medium text-gray-900">تغيير كلمة المرور</h3>
+                            <p class="text-gray-500 text-sm">آخر تغيير: منذ شهر</p>
+                        </div>
+                        <button class="px-4 py-2 border border-primary text-primary font-medium rounded-xl hover:bg-primary/5">تغيير</button>
+                    </div>
+                    <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                        <div>
+                            <h3 class="font-medium text-gray-900">المصادقة الثنائية</h3>
+                            <p class="text-gray-500 text-sm">إضافة طبقة أمان إضافية</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer">
+                            <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:right-[2px] after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary"></div>
+                        </label>
+                    </div>
+                    <div class="flex items-center justify-between py-3">
+                        <div>
+                            <h3 class="font-medium text-gray-900">الجلسات النشطة</h3>
+                            <p class="text-gray-500 text-sm">إدارة الأجهزة المتصلة</p>
+                        </div>
+                        <button class="px-4 py-2 border border-gray-200 text-gray-600 font-medium rounded-xl hover:bg-gray-50">عرض</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Save Button -->
+            <div class="flex justify-end gap-4">
+                <button class="px-6 py-3 border border-gray-200 text-gray-600 font-bold rounded-2xl hover:bg-gray-50">إلغاء</button>
+                <button class="px-8 py-3 bg-gradient-to-r from-primary to-primary/90 text-white font-bold rounded-2xl hover:shadow-xl transition-all btn-glow">حفظ التغييرات</button>
+            </div>
         </div>
-      </main>
-    </div>
+        
+        <!-- Danger Zone -->
+        <div class="mt-8 bg-red-50 border border-red-100 rounded-3xl p-6">
+            <h2 class="text-xl font-bold text-red-600 mb-4">منطقة الخطر</h2>
+            <p class="text-gray-600 mb-4">بمجرد حذف حسابك، لا يمكن استعادة أي من بياناتك.</p>
+            <button class="px-6 py-3 bg-red-500 text-white font-bold rounded-xl hover:bg-red-600">حذف الحساب</button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-400 text-sm">© 2024 T3leem. جميع الحقوق محفوظة.</div>
+    </footer>
 
     <script src="js/main.js"></script>
-    <script>
-      // Settings tabs
-      const tabButtons = document.querySelectorAll(
-        '[data-tab-group="settings"]',
-      );
-      tabButtons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          tabButtons.forEach((b) => {
-            b.classList.remove("text-primary", "border-b-2", "border-primary");
-            b.classList.add("text-gray-500");
-          });
-          btn.classList.remove("text-gray-500");
-          btn.classList.add("text-primary", "border-b-2", "border-primary");
-
-          document
-            .querySelectorAll('[data-tab-content="settings"]')
-            .forEach((content) => {
-              content.classList.add("hidden");
-            });
-          document.getElementById(btn.dataset.tab).classList.remove("hidden");
-        });
-      });
-    </script>
-  </body>
+</body>
 </html>
