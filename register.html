@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل حساب جديد - مجمع MAJMA</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ================= المتغيرات والألوان ================= */
+        :root {
+            /* Light Mode Defaults */
+            --bg-color: #f0f2f5;
+            --text-color: #1f2937;
+            --text-secondary: #6b7280;
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            
+            /* Glassmorphism - Light */
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            --input-bg: rgba(255, 255, 255, 0.5);
+            
+            --btn-primary: #4f46e5;
+        }
+
+        body.dark-mode {
+            /* Dark Mode Overrides */
+            --bg-color: #0f172a;
+            --text-color: #f8fafc;
+            --text-secondary: #94a3b8;
+            --primary-gradient: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);
+            
+            /* Glassmorphism - Dark */
+            --glass-bg: rgba(30, 41, 59, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            --input-bg: rgba(0, 0, 0, 0.3);
+            
+            --btn-primary: #6366f1;
+        }
+
+        /* ================= التنسيقات العامة ================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative;
+        }
+
+        /* الخلفيات المتحركة */
+        .bg-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            z-index: -1;
+            opacity: 0.5;
+            transition: all 0.5s ease;
+        }
+        .blob-1 { top: -15%; right: -15%; width: 500px; height: 500px; background: #6366f1; }
+        .blob-2 { bottom: -15%; left: -15%; width: 400px; height: 400px; background: #d946ef; }
+
+        /* الكارت الزجاجي الرئيسي */
+        .register-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px); /* زيادة التمويه */
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px; /* زوايا أكثر نعومة */
+            box-shadow: var(--glass-shadow);
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 480px;
+            margin: 20px;
+            position: relative;
+            transition: background 0.3s ease, border 0.3s ease;
+        }
+
+        /* أزرار أعلى الكارت (عودة و الثيم) */
+        .top-actions {
+            position: absolute;
+            top: 25px;
+            width: calc(100% - 80px);
+            left: 40px;
+            right: 40px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .icon-btn:hover {
+            background: var(--text-color);
+            color: var(--bg-color);
+            transform: scale(1.1);
+        }
+
+        .logo-area { text-align: center; margin-top: 20px; margin-bottom: 35px; }
+        
+        .logo-area h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        /* ================= زر التبديل (طالب / مدرس) - تم الإصلاح ================= */
+        .user-type-toggle {
+            display: flex;
+            position: relative;
+            background: var(--input-bg);
+            border-radius: 50px;
+            padding: 6px;
+            margin-bottom: 30px;
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+        }
+
+        .toggle-option {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            font-weight: 700;
+            z-index: 2;
+            transition: color 0.3s;
+            color: var(--text-secondary);
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .toggle-option.active { color: #ffffff; }
+
+        /* الخلفية المتحركة */
+        .toggle-bg {
+            position: absolute;
+            top: 6px;
+            right: 6px; /* يبدأ من اليمين */
+            width: calc(50% - 6px);
+            height: calc(100% - 12px);
+            background: var(--primary-gradient);
+            border-radius: 50px;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* حركة مرنة */
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* الحالة النشطة (مدرس) -> تتحرك لليسار */
+        .user-type-toggle.teacher-active .toggle-bg {
+            transform: translateX(-100%);
+        }
+
+        /* ================= حقول الإدخال ================= */
+        .form-group { margin-bottom: 20px; }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            background: var(--input-bg);
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .form-group input:focus {
+            border-color: #8b5cf6;
+            background: var(--glass-bg);
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+        }
+
+        /* حقل ولي الأمر */
+        #guardianField {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.4s ease;
+        }
+        
+        #guardianField.show {
+            max-height: 100px;
+            opacity: 1;
+            transform: translateY(0);
+            margin-bottom: 20px;
+        }
+
+        /* زر الإرسال */
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 16px;
+            background: var(--primary-gradient);
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: inherit;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+        
+        .submit-btn:active { transform: translateY(-1px); }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .login-link a { 
+            color: #8b5cf6; 
+            font-weight: 700; 
+            text-decoration: none; 
+            transition: 0.2s;
+        }
+        .login-link a:hover { text-decoration: underline; }
+
+        @media (max-width: 480px) {
+            .register-card { padding: 40px 25px; margin: 10px; }
+            .logo-area h1 { font-size: 1.9rem; }
+        }
+    </style>
+</head>
+<body class="light-mode"> <!-- الكلاس الافتراضي -->
+
+    <!-- الخلفيات -->
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+
+    <div class="register-card">
+        <!-- الأزرار العلوية: زر العودة وزر الثيم -->
+        <div class="top-actions">
+            <div class="icon-btn" onclick="window.location.href='index.html'" title="العودة للرئيسية">
+                <i class="fas fa-arrow-right"></i>
+            </div>
+            
+            <div class="icon-btn" id="themeToggleBtn" title="تغيير الوضع">
+                <i class="fas fa-moon"></i>
+            </div>
+        </div>
+
+        <div class="logo-area">
+            <h1>MAJMA</h1>
+            <p style="color: var(--text-secondary); margin-top: 5px;">أنشئ حسابك وابدأ الرحلة</p>
+        </div>
+
+        <!-- زر التبديل المصلح -->
+        <div class="user-type-toggle" id="userTypeToggle">
+            <div class="toggle-bg"></div>
+            <div class="toggle-option active" id="studentOption">طالب</div>
+            <div class="toggle-option" id="teacherOption">مدرس</div>
+        </div>
+
+        <form id="registerForm">
+            <div class="form-group">
+                <label>الاسم بالكامل</label>
+                <input type="text" placeholder="أدخل اسمك الثلاثي" required>
+            </div>
+
+            <div class="form-group">
+                <label>رقم الهاتف</label>
+                <input type="tel" placeholder="01xxxxxxxxx" required>
+            </div>
+
+            <!-- حقل ولي الأمر -->
+            <div class="form-group" id="guardianField">
+                <label>رقم هاتف ولي الأمر</label>
+                <input type="tel" id="guardianPhone" placeholder="رقم ولي الأمر (مطلوب للطلاب)">
+            </div>
+
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" placeholder="example@email.com" required>
+            </div>
+
+            <div class="form-group">
+                <label>كلمة المرور</label>
+                <input type="password" placeholder="********" required>
+            </div>
+
+            <div class="form-group">
+                <label>تأكيد كلمة المرور</label>
+                <input type="password" placeholder="********" required>
+            </div>
+
+            <button type="submit" class="submit-btn">إنشاء الحساب</button>
+        </form>
+
+        <div class="login-link">
+            لديك حساب بالفعل؟ <a href="#">سجل دخول</a>
+        </div>
+    </div>
+
+    <script>
+        // ================= إدارة الوضع الليلي والنهاري =================
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = themeToggleBtn.querySelector('i');
+        const body = document.body;
+
+        // 1. تحميل الثيم المحفوظ عند فتح الصفحة
+        const savedTheme = localStorage.getItem('majma-theme') || 'light-mode';
+        body.className = savedTheme;
+        updateThemeIcon(savedTheme);
+
+        // 2. دالة تغيير الأيقونة
+        function updateThemeIcon(theme) {
+            if (theme === 'dark-mode') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        }
+
+        // 3. حدث الضغط على زر الثيم
+        themeToggleBtn.addEventListener('click', () => {
+            if (body.classList.contains('light-mode')) {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                localStorage.setItem('majma-theme', 'dark-mode');
+                updateThemeIcon('dark-mode');
+            } else {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                localStorage.setItem('majma-theme', 'light-mode');
+                updateThemeIcon('light-mode');
+            }
+        });
+
+        // ================= منطق التبديل (طالب / مدرس) =================
+        const toggleContainer = document.getElementById('userTypeToggle');
+        const studentOption = document.getElementById('studentOption');
+        const teacherOption = document.getElementById('teacherOption');
+        const guardianField = document.getElementById('guardianField');
+        const guardianInput = document.getElementById('guardianPhone');
+
+        let isTeacher = false;
+
+        toggleContainer.addEventListener('click', () => {
+            isTeacher = !isTeacher;
+
+            if (isTeacher) {
+                // تفعيل المدرس: إضافة كلاس يحرك الخلفية لليسار
+                toggleContainer.classList.add('teacher-active');
+                
+                teacherOption.classList.add('active');
+                studentOption.classList.remove('active');
+                
+                // إخفاء حقل ولي الأمر وإلغاء الإلزام
+                guardianField.classList.remove('show');
+                setTimeout(() => { guardianInput.required = false; }, 400); // تأخير بسيط لتنتهي الحركة
+
+            } else {
+                // تفعيل الطالب: إزالة الكلاس (تعود الخلفية لليمين)
+                toggleContainer.classList.remove('teacher-active');
+                
+                studentOption.classList.add('active');
+                teacherOption.classList.remove('active');
+                
+                // إظهار حقل ولي الأمر وتفعيل الإلزام
+                guardianInput.required = true;
+                guardianField.classList.add('show');
+            }
+        });
+
+        // ================= إرسال النموذج =================
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const userType = isTeacher ? "مدرس" : "طالب";
+            alert(`مرحباً بك في مجمع MAJMA!\nتم تسجيل حسابك بنجاح كـ ${userType}.\nسيتم تحويلك الآن...`);
+            
+            // هنا تتم عملية الإرسال للسيرفر
+            // window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>
