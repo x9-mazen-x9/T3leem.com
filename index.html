@@ -1,1045 +1,2080 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>مجمع MAJMA - منصة التعليم الاجتماعي</title>
-
-    <!-- استيراد خط عربي عصري -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- مكتبة أيقونات -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabib - منصة طبية ذكية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-      /* ================= المتغيرات والألوان ================= */
-      :root {
-        /* الألوان الأساسية - الوضع النهاري */
-        --bg-color: #f0f2f5;
-        --text-color: #1f2937;
-        --text-secondary: #4b5563;
-        --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-        --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);
-
-        /* ألوان الزجاج - Light Mode */
-        --glass-bg: rgba(255, 255, 255, 0.65);
-        --glass-border: rgba(255, 255, 255, 0.5);
-        --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-
-        /* أزرار */
-        --btn-primary: #4f46e5;
-        --btn-primary-hover: #4338ca;
-        --btn-text: #ffffff;
-
-        /* الانتقالات */
-        --transition: all 0.3s ease;
-      }
-
-      /* الوضع الليلي */
-      body.dark-mode {
-        --bg-color: #0f172a;
-        --text-color: #f8fafc;
-        --text-secondary: #94a3b8;
-        --primary-gradient: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);
-        --secondary-gradient: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
-
-        /* ألوان الزجاج - Dark Mode */
-        --glass-bg: rgba(30, 41, 59, 0.7);
-        --glass-border: rgba(255, 255, 255, 0.1);
-        --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-
-        --btn-primary: #6366f1;
-        --btn-primary-hover: #818cf8;
-      }
-
-      /* ================= التنسيقات العامة ================= */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: "Cairo", sans-serif;
-        background-color: var(--bg-color);
-        color: var(--text-color);
-        transition: var(--transition);
-        overflow-x: hidden;
-        position: relative;
-      }
-
-      /* خلفيات متحركة لتعزيز تأثير الزجاج */
-      .bg-blob {
-        position: fixed;
-        border-radius: 50%;
-        filter: blur(80px);
-        z-index: -1;
-        animation: float 10s infinite ease-in-out;
-        opacity: 0.6;
-      }
-
-      .blob-1 {
-        top: -10%;
-        right: -10%;
-        width: 500px;
-        height: 500px;
-        background: #6366f1;
-      }
-
-      .blob-2 {
-        bottom: -10%;
-        left: -10%;
-        width: 400px;
-        height: 400px;
-        background: #a855f7;
-        animation-delay: 5s;
-      }
-
-      @keyframes float {
-        0% {
-          transform: translate(0, 0);
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #06b6d4;
+            --accent: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
-        50% {
-          transform: translate(30px, 50px);
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        100% {
-          transform: translate(0, 0);
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            min-height: 100vh;
+            color: var(--dark);
         }
-      }
-
-      a {
-        text-decoration: none;
-        color: inherit;
-      }
-      ul {
-        list-style: none;
-      }
-
-      /* حاوية الزجاج (Glass Card) */
-      .glass-card {
-        background: var(--glass-bg);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid var(--glass-border);
-        border-radius: 20px;
-        box-shadow: var(--glass-shadow);
-        transition: var(--transition);
-      }
-
-      .glass-card:hover {
-        transform: translateY(-5px);
-        border-color: rgba(255, 255, 255, 0.3);
-      }
-
-      /* ================= الهيدر والنافيجيشن ================= */
-      header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1000;
-        padding: 15px 0;
-        transition: var(--transition);
-      }
-
-      header.scrolled {
-        background: var(--glass-bg);
-        backdrop-filter: blur(15px);
-        border-bottom: 1px solid var(--glass-border);
-        padding: 10px 0;
-      }
-
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-      }
-
-      .nav-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .logo {
-        font-size: 1.8rem;
-        font-weight: 900;
-        background: var(--primary-gradient);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      /* منطقة الشعار الصغير */
-      .logo-img {
-        height: 40px;
-        width: auto;
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 30px;
-      }
-
-      .nav-links a {
-        font-weight: 600;
-        color: var(--text-color);
-        position: relative;
-      }
-
-      .nav-links a::after {
-        content: "";
-        position: absolute;
-        bottom: -5px;
-        right: 0;
-        width: 0;
-        height: 2px;
-        background: var(--primary-gradient);
-        transition: var(--transition);
-      }
-
-      .nav-links a:hover::after {
-        width: 100%;
-      }
-
-      .header-actions {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-      }
-
-      /* زر تبديل الثيم */
-      .theme-toggle {
-        cursor: pointer;
-        padding: 8px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid var(--glass-border);
-        color: var(--text-color);
-      }
-
-      .btn {
-        padding: 10px 25px;
-        border-radius: 12px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: var(--transition);
-        border: none;
-        font-family: inherit;
-      }
-
-      .btn-primary {
-        background: var(--primary-gradient);
-        color: white;
-        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-      }
-
-      .btn-primary:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-      }
-
-      .btn-outline {
-        background: transparent;
-        border: 2px solid var(--btn-primary);
-        color: var(--btn-primary);
-      }
-
-      .btn-outline:hover {
-        background: var(--btn-primary);
-        color: white;
-      }
-
-      /* ================= قسم الهيرو (Hero Section) ================= */
-      .hero {
-        padding: 160px 0 100px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        min-height: 100vh;
-      }
-
-      .hero-text {
-        flex: 1;
-        padding-left: 50px;
-      }
-
-      .hero h1 {
-        font-size: 3.5rem;
-        line-height: 1.2;
-        margin-bottom: 20px;
-        font-weight: 900;
-      }
-
-      .hero p {
-        font-size: 1.2rem;
-        color: var(--text-secondary);
-        margin-bottom: 30px;
-        max-width: 500px;
-      }
-
-      .hero-buttons {
-        display: flex;
-        gap: 15px;
-      }
-
-      .hero-image {
-        flex: 1;
-        position: relative;
-      }
-
-      .hero-mockup {
-        width: 100%;
-        max-width: 500px;
-        border-radius: 20px;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-        border: 1px solid var(--glass-border);
-      }
-
-      /* ================= المميزات (Features) ================= */
-      .section-title {
-        text-align: center;
-        margin-bottom: 60px;
-      }
-
-      .section-title h2 {
-        font-size: 2.5rem;
-        margin-bottom: 15px;
-      }
-
-      .section-title p {
-        color: var(--text-secondary);
-        max-width: 600px;
-        margin: 0 auto;
-      }
-
-      .features {
-        padding: 100px 0;
-      }
-
-      .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 30px;
-      }
-
-      .feature-card {
-        padding: 30px;
-        text-align: center;
-      }
-
-      .icon-box {
-        width: 70px;
-        height: 70px;
-        background: var(--primary-gradient);
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 20px;
-        font-size: 1.8rem;
-        color: white;
-        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
-      }
-
-      .feature-card h3 {
-        margin-bottom: 15px;
-        font-size: 1.4rem;
-      }
-
-      .feature-card p {
-        color: var(--text-secondary);
-        line-height: 1.6;
-      }
-
-      /* ================= النظام التعليمي (LMS System) ================= */
-      .lms-section {
-        padding: 100px 0;
-      }
-
-      .lms-container {
-        display: flex;
-        align-items: center;
-        gap: 50px;
-      }
-
-      .lms-visual {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
-
-      /* محاكاة هيكل الكورس */
-      .course-structure {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 15px;
-        padding: 20px;
-        border: 1px solid var(--glass-border);
-      }
-
-      .structure-item {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        padding: 10px;
-        border-bottom: 1px solid var(--glass-border);
-      }
-
-      .structure-item:last-child {
-        border-bottom: none;
-      }
-
-      .status-icon {
-        color: #10b981;
-        margin-left: 10px;
-      }
-      .lock-icon {
-        color: var(--text-secondary);
-        margin-left: 10px;
-      }
-
-      .lms-info {
-        flex: 1;
-      }
-
-      .lms-list li {
-        margin-bottom: 15px;
-        display: flex;
-        align-items: flex-start;
-        gap: 15px;
-      }
-
-      .check-icon {
-        color: #10b981;
-        background: rgba(16, 185, 129, 0.1);
-        padding: 5px;
-        border-radius: 50%;
-        min-width: 25px;
-        height: 25px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.8rem;
-      }
-
-      /* ================= السوشيال ميديا والتفاعل ================= */
-      .social-section {
-        padding: 100px 0;
-      }
-
-      .social-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 40px;
-      }
-
-      .social-feed-mockup {
-        background: var(--glass-bg);
-        border-radius: 20px;
-        padding: 20px;
-        border: 1px solid var(--glass-border);
-        max-width: 400px;
-        margin: 0 auto;
-      }
-
-      .post-header {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 15px;
-      }
-
-      .avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: #ddd;
-      }
-
-      .verified-badge {
-        color: #3b82f6;
-        font-size: 0.8rem;
-        margin-right: 5px;
-      }
-
-      .post-actions {
-        display: flex;
-        justify-content: space-around;
-        margin-top: 15px;
-        padding-top: 15px;
-        border-top: 1px solid var(--glass-border);
-      }
-
-      .action-item {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        color: var(--text-secondary);
-        cursor: pointer;
-      }
-
-      .action-item:hover {
-        color: var(--btn-primary);
-      }
-
-      /* ================= التقنية والأمان ================= */
-      .tech-stack {
-        padding: 60px 0;
-        text-align: center;
-      }
-
-      .tech-logos {
-        display: flex;
-        justify-content: center;
-        gap: 40px;
-        flex-wrap: wrap;
-        margin-top: 30px;
-        opacity: 0.8;
-      }
-
-      .tech-item {
-        font-weight: 700;
-        font-size: 1.2rem;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      /* ================= الفوتر ================= */
-      footer {
-        background: rgba(0, 0, 0, 0.2);
-        padding: 50px 0 20px;
-        margin-top: 50px;
-        border-top: 1px solid var(--glass-border);
-      }
-
-      .footer-content {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 40px;
-        margin-bottom: 40px;
-      }
-
-      .footer-col h4 {
-        margin-bottom: 20px;
-        color: var(--text-color);
-      }
-
-      .footer-col ul li {
-        margin-bottom: 10px;
-      }
-
-      .footer-col ul li a {
-        color: var(--text-secondary);
-      }
-
-      .footer-col ul li a:hover {
-        color: var(--btn-primary);
-      }
-
-      .copyright {
-        text-align: center;
-        padding-top: 20px;
-        border-top: 1px solid var(--glass-border);
-        color: var(--text-secondary);
-        font-size: 0.9rem;
-      }
-
-      /* ================= التجاوب (Responsive) ================= */
-      @media (max-width: 968px) {
-        .hero {
-          flex-direction: column-reverse;
-          text-align: center;
-          padding-top: 120px;
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .hero-text {
-          padding-left: 0;
-          margin-top: 40px;
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
         }
-
-        .hero h1 {
-          font-size: 2.5rem;
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
-
-        .hero-buttons {
-          justify-content: center;
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
-
-        .lms-container,
-        .social-grid {
-          flex-direction: column;
-          grid-template-columns: 1fr;
+        
+        .animate-fade { animation: fadeIn 0.6s ease-out; }
+        .animate-slide { animation: slideIn 0.4s ease-out; }
+        .animate-pulse { animation: pulse 2s infinite; }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        
+        /* Landing Page */
+        .landing {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-      }
-
-      @media (max-width: 768px) {
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+        
         .nav-links {
-          display: none; /* يمكن إضافة قائمة برجر هنا */
+            display: flex;
+            gap: 2rem;
+            align-items: center;
         }
-      }
-    </style>
-  </head>
-  <body class="light-mode">
-    <!-- خلفيات متحركة -->
-    <div class="bg-blob blob-1"></div>
-    <div class="bg-blob blob-2"></div>
-
-    <!-- الهيدر -->
-    <header id="header">
-      <div class="container nav-content">
-        <a href="#" class="logo">
-          <!-- اللوجو يتغير بالجافاسكربت -->
-          <img
-            src="white-majma.png"
-            alt="MAJMA Logo"
-            id="logo-img"
-            class="logo-img"
-            alt="MAJMA Logo"
-            id="logo-img"
-            class="logo-img"
-          />
-          MAJMA
-        </a>
-
-        <nav>
-          <ul class="nav-links">
-            <li><a href="#home">الرئيسية</a></li>
-            <li><a href="#features">المميزات</a></li>
-            <li><a href="#teachers">للمدرسين</a></li>
-            <li><a href="#social">المجتمع</a></li>
-          </ul>
-        </nav>
-
-        <div class="header-actions">
-          <div class="theme-toggle" id="theme-toggle">
-            <i class="fas fa-moon"></i>
-          </div>
-          <!-- بدلاً من مجرد زر، اجعله رابطاً -->
-          <a
-            href="register.html"
-            class="btn btn-primary"
-            style="display: inline-block; text-decoration: none"
-            >ابدأ الآن</a
-          >
-        </div>
-      </div>
-    </header>
-
-    <main>
-      <!-- قسم الهيرو -->
-      <section class="hero container" id="home">
-        <div class="hero-text">
-          <h1>
-            مجتمعك التعليمي في مكان واحد<br /><span
-              style="
-                background: var(--primary-gradient);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-              "
-              >تعلم، تفاعل، وتطور</span
-            >
-          </h1>
-          <p>
-            منصة تجمع بين قوة أنظمة إدارة التعلم LMS وبين حيوية الشبكات
-            الاجتماعية. للمدرسين وللطلاب، تجربة تعليمية ذكية وآمنة.
-          </p>
-          <div class="hero-buttons">
-            <button class="btn btn-primary">انضم كمدرس</button>
-            <button class="btn btn-outline">انضم كطالب</button>
-          </div>
-        </div>
-        <div class="hero-image">
-          <!-- صورة توضيحية للمنصة -->
-          <!-- تم تحديد الصورة الافتراضية هنا للوضع النهاري -->
-          <img
-            src="white-majma.png"
-            alt="MAJMA Logo"
-            id="logo-img"
-            class="logo-img"
-          />
-        </div>
-      </section>
-
-      <!-- المميزات العامة -->
-      <section class="features container" id="features">
-        <div class="section-title">
-          <h2>لماذا مجمع؟</h2>
-          <p>
-            نقدم لك ميزات تجعل من عملية التعلم والتدريس تجربة سلسة واحترافية
-          </p>
-        </div>
-
-        <div class="features-grid">
-          <!-- ميزة 1 -->
-          <div class="glass-card feature-card">
-            <div class="icon-box">
-              <i class="fas fa-layer-group"></i>
-            </div>
-            <h3>هيكل كورسات متكامل</h3>
-            <p>
-              نظام دعم الكورسات، الوحدات، والدروس. مع إمكانية رفع ملفات PDF
-              والصور بسهولة لكل درس.
-            </p>
-          </div>
-
-          <!-- ميزة 2 -->
-          <div class="glass-card feature-card">
-            <div class="icon-box">
-              <i class="fas fa-shield-alt"></i>
-            </div>
-            <h3>أمان عالي (Bunny Stream)</h3>
-            <p>
-              نستخدم Bunny Stream لحماية محتواك الفيديوي من التحميل غير المصرح
-              به مع أعلى جودة بث.
-            </p>
-          </div>
-
-          <!-- ميزة 3 -->
-          <div class="glass-card feature-card">
-            <div class="icon-box">
-              <i class="fas fa-clock"></i>
-            </div>
-            <h3>استئناف التقدم (Auto-Resume)</h3>
-            <p>
-              خرجت بعد مشاهدة 30%؟ لا تقلق، سيعاد الفيديو من حيث توقفت تماماً
-              مثل يوتيوب.
-            </p>
-          </div>
-
-          <!-- ميزة 4 -->
-          <div class="glass-card feature-card">
-            <div class="icon-box">
-              <i class="fas fa-user-check"></i>
-            </div>
-            <h3>نظام الاشتراكات الذكي</h3>
-            <p>
-              اشتراك لمدة 35 يوم لكل مدرس. انتهى الاشتراك؟ يتم تجميده دون حذف
-              تقدمك حتى تجدد.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- قسم نظام التعليم (للمدرسين) -->
-      <section class="lms-section container" id="teachers">
-        <div class="lms-container">
-          <div class="lms-visual glass-card" style="padding: 20px">
-            <h3 style="margin-bottom: 15px; text-align: center">
-              هيكل الكورس التسلسلي
-            </h3>
-            <div class="course-structure">
-              <div
-                class="structure-item"
-                style="background: rgba(99, 102, 241, 0.1); border-radius: 8px"
-              >
-                <i class="fas fa-play-circle status-icon"></i>
-                <span>الدرس الأول: المقدمة</span>
-                <i
-                  class="fas fa-check-circle"
-                  style="margin-right: auto; color: #10b981"
-                ></i>
-              </div>
-              <div class="structure-item">
-                <i class="fas fa-file-alt status-icon"></i>
-                <span>واجب الدرس الأول</span>
-                <i
-                  class="fas fa-check-circle"
-                  style="margin-right: auto; color: #10b981"
-                ></i>
-              </div>
-              <div class="structure-item">
-                <i class="fas fa-play-circle status-icon"></i>
-                <span>الدرس الثاني: الأساسيات</span>
-                <i class="fas fa-lock lock-icon" style="margin-right: auto"></i>
-              </div>
-              <div class="structure-item">
-                <i class="fas fa-video status-icon"></i>
-                <span>🔴 فيديو مراجعة (مفتوح للجميع)</span>
-                <i
-                  class="fas fa-unlock"
-                  style="margin-right: auto; color: #f59e0b"
-                ></i>
-              </div>
-            </div>
-            <p
-              style="
-                font-size: 0.8rem;
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .hero {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .clinic-search {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .clinic-search input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        .hero-image {
+            flex: 1;
+            position: relative;
+        }
+        
+        .floating-card {
+            position: absolute;
+            background: white;
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .card-1 {
+            top: 10%;
+            left: -10%;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .card-2 {
+            bottom: 20%;
+            right: -5%;
+            animation: float 4s ease-in-out infinite 1s;
+        }
+        
+        .clinics-grid {
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .clinics-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .clinic-card {
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .clinic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .clinic-header {
+            height: 150px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .clinic-logo {
+            position: absolute;
+            bottom: -30px;
+            right: 2rem;
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .clinic-body {
+            padding: 2.5rem 2rem 2rem;
+        }
+        
+        .clinic-body h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .clinic-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .clinic-stats {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        
+        /* App Container */
+        .app-container {
+            display: none;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 280px;
+            background: white;
+            border-left: 1px solid #e2e8f0;
+            padding: 2rem 1.5rem;
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 50;
+        }
+        
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #f1f5f9;
+        }
+        
+        .clinic-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .menu-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            color: var(--gray);
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .menu-link:hover, .menu-link.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .menu-link i {
+            font-size: 1.25rem;
+            width: 24px;
+        }
+        
+        .main-content {
+            margin-right: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #f1f5f9;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            width: 300px;
+        }
+        
+        .search-box input {
+            border: none;
+            background: none;
+            outline: none;
+            font-family: inherit;
+            width: 100%;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .notification-btn {
+            position: relative;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            color: var(--gray);
+            cursor: pointer;
+        }
+        
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.4rem;
+            border-radius: 50%;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .bg-blue { background: #dbeafe; color: var(--primary); }
+        .bg-green { background: #d1fae5; color: var(--accent); }
+        .bg-orange { background: #ffedd5; color: var(--warning); }
+        .bg-purple { background: #f3e8ff; color: #9333ea; }
+        
+        .stat-info h3 {
+            font-size: 2rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .stat-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Content Sections */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-header h2 {
+            font-size: 1.75rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        /* Calendar */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+        
+        .calendar-header {
+            text-align: center;
+            font-weight: 600;
+            color: var(--gray);
+            padding: 0.75rem;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .calendar-day:hover {
+            background: #f1f5f9;
+        }
+        
+        .calendar-day.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .calendar-day.has-event::after {
+            content: '';
+            position: absolute;
+            bottom: 6px;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+        
+        /* Appointments List */
+        .appointment-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background 0.3s;
+        }
+        
+        .appointment-item:hover {
+            background: #f8fafc;
+        }
+        
+        .appointment-time {
+            text-align: center;
+            min-width: 60px;
+        }
+        
+        .appointment-time .time {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .appointment-time .period {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+        
+        .appointment-info {
+            flex: 1;
+        }
+        
+        .appointment-info h4 {
+            margin-bottom: 0.25rem;
+        }
+        
+        .appointment-info p {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .status-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .status-confirmed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-pending {
+            background: #ffedd5;
+            color: #92400e;
+        }
+        
+        /* Medical Records */
+        .record-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .record-item:hover {
+            background: #f8fafc;
+            transform: translateX(-5px);
+        }
+        
+        .record-icon {
+            width: 50px;
+            height: 50px;
+            background: #dbeafe;
+            color: var(--primary);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        
+        .record-content h4 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .record-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        
+        /* Social Feed */
+        .feed-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .create-post {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+        }
+        
+        .post-input {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .post-input textarea {
+            flex: 1;
+            border: none;
+            outline: none;
+            resize: none;
+            font-family: inherit;
+            font-size: 1rem;
+            min-height: 80px;
+        }
+        
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #f1f5f9;
+        }
+        
+        .post-tools {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .tool-btn {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 1.25rem;
+            transition: color 0.3s;
+        }
+        
+        .tool-btn:hover {
+            color: var(--primary);
+        }
+        
+        .post-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1rem;
+        }
+        
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+        
+        .post-author {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+        }
+        
+        .author-info h4 {
+            margin-bottom: 0.25rem;
+        }
+        
+        .author-info span {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        
+        .post-content {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        
+        .post-image {
+            width: 100%;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .post-stats {
+            display: flex;
+            gap: 2rem;
+            padding: 1rem 0;
+            border-top: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .stat-btn:hover {
+            color: var(--primary);
+        }
+        
+        .stat-btn.liked {
+            color: var(--danger);
+        }
+        
+        /* AI Assistant */
+        .ai-container {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 1000;
+        }
+        
+        .ai-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .ai-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .ai-chat {
+            position: absolute;
+            bottom: 80px;
+            left: 0;
+            width: 380px;
+            height: 500px;
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .ai-chat.open {
+            display: flex;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        .ai-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .ai-avatar {
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        
+        .ai-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 1rem;
+            border-radius: 1rem;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .message.ai {
+            background: #f1f5f9;
+            align-self: flex-start;
+            border-bottom-right-radius: 0.25rem;
+        }
+        
+        .message.user {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            align-self: flex-end;
+            border-bottom-left-radius: 0.25rem;
+        }
+        
+        .ai-input {
+            padding: 1rem;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .ai-input input {
+            flex: 1;
+            border: none;
+            background: #f1f5f9;
+            padding: 0.75rem 1rem;
+            border-radius: 2rem;
+            outline: none;
+            font-family: inherit;
+        }
+        
+        .ai-input button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .ai-input button:hover {
+            transform: scale(1.1);
+        }
+        
+        .suggestion-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .chip {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .chip:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 1.5rem;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+        }
+        
+        /* Auth Modal */
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            background: #f1f5f9;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .auth-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .user-type-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .user-type-card {
+            padding: 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .user-type-card:hover,
+        .user-type-card.selected {
+            border-color: var(--primary);
+            background: #eff6ff;
+        }
+        
+        .user-type-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Form Elements */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(100%);
+                transition: transform 0.3s;
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-right: 0;
+            }
+            
+            .hero {
+                flex-direction: column;
                 text-align: center;
-                margin-top: 10px;
-                opacity: 0.7;
-              "
-            >
-              واجهة تحكم المدرس
-            </p>
-          </div>
-
-          <div class="lms-info">
-            <div
-              class="section-title"
-              style="text-align: right; margin-bottom: 30px"
-            >
-              <h2>تحكم كامل في العملية التعليمية</h2>
-              <p>لوحة تحكم مصممة خصيصاً للمدرسين لإدارة المحتوى والطلاب</p>
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+        }
+        
+        /* Loading Animation */
+        .typing-indicator {
+            display: flex;
+            gap: 0.25rem;
+            padding: 1rem;
+        }
+        
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: var(--gray);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Landing Page -->
+    <div class="landing" id="landing">
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Tabib</span>
             </div>
+            <div class="nav-links">
+                <a href="#clinics">العيادات</a>
+                <a href="#features">المميزات</a>
+                <a href="#about">عن المنصة</a>
+                <button class="btn btn-secondary" onclick="openAuthModal()">
+                    <i class="fas fa-user-md"></i>
+                    تسجيل الدخول
+                </button>
+                <button class="btn btn-primary" onclick="openAuthModal('clinic')">
+                    <i class="fas fa-hospital"></i>
+                    سجل عيادتك
+                </button>
+            </div>
+        </nav>
+        
+        <section class="hero">
+            <div class="hero-content">
+                <h1>رعاية صحية ذكية<br>في متناول يدك</h1>
+                <p>منصة Tabib تربطك بأفضل العيادات والأطباء. احجز مواعيدك، احفظ سجلاتك الطبية، وتفاعل مع مجتمع صحي متكامل.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="scrollToClinics()">
+                        <i class="fas fa-search"></i>
+                        ابحث عن عيادة
+                    </button>
+                    <button class="btn btn-secondary" onclick="openAuthModal('clinic')">
+                        <i class="fas fa-plus-circle"></i>
+                        سجل عيادتك
+                    </button>
+                </div>
+                <div class="clinic-search">
+                    <i class="fas fa-search" style="color: var(--gray);"></i>
+                    <input type="text" placeholder="ابحث باسم العيادة، التخصص، أو المنطقة...">
+                    <button class="btn btn-primary">بحث</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div style="background: linear-gradient(135deg, #dbeafe, #cffafe); height: 500px; border-radius: 2rem; display: flex; align-items: center; justify-content: center; font-size: 8rem; color: var(--primary);">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <div class="floating-card card-1">
+                    <i class="fas fa-calendar-check" style="color: var(--accent); font-size: 1.5rem;"></i>
+                    <div>
+                        <div style="font-weight: 700;">حجز فوري</div>
+                        <div style="font-size: 0.85rem; color: var(--gray);">أكثر من 500 عيادة</div>
+                    </div>
+                </div>
+                <div class="floating-card card-2">
+                    <i class="fas fa-robot" style="color: var(--primary); font-size: 1.5rem;"></i>
+                    <div>
+                        <div style="font-weight: 700;">مساعد ذكي</div>
+                        <div style="font-size: 0.85rem; color: var(--gray);">24/7 في خدمتك</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="clinics-grid" id="clinics">
+            <div class="section-title">
+                <h2>العيادات المميزة</h2>
+                <p style="color: var(--gray);">اختر العيادة المناسبة لاحتياجاتك الصحية</p>
+            </div>
+            <div class="clinics-container">
+                <div class="clinic-card" onclick="enterClinic('alnoor')">
+                    <div class="clinic-header" style="background: linear-gradient(135deg, #0ea5e9, #06b6d4);">
+                        <div style="height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                            <i class="fas fa-hospital-alt"></i>
+                        </div>
+                    </div>
+                    <div class="clinic-logo" style="color: #0ea5e9;">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <div class="clinic-body">
+                        <h3>عيادة النور</h3>
+                        <div class="clinic-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> الرياض، حي العليا</span>
+                            <span><i class="fas fa-star" style="color: #fbbf24;"></i> 4.9</span>
+                        </div>
+                        <p style="color: var(--gray); margin-bottom: 1rem;">عيادة متكاملة تقدم خدمات طبية متنوعة بأحدث التقنيات</p>
+                        <div class="clinic-stats">
+                            <div class="stat">
+                                <div class="stat-value">12</div>
+                                <div class="stat-label">دكتور</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">8</div>
+                                <div class="stat-label">تخصص</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">2.5k</div>
+                                <div class="stat-label">مريض</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="clinic-card" onclick="enterClinic('alsalam')">
+                    <div class="clinic-header" style="background: linear-gradient(135deg, #10b981, #34d399);">
+                        <div style="height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                            <i class="fas fa-clinic-medical"></i>
+                        </div>
+                    </div>
+                    <div class="clinic-logo" style="color: #10b981;">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="clinic-body">
+                        <h3>عيادة السلام</h3>
+                        <div class="clinic-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> جدة، حي الصفا</span>
+                            <span><i class="fas fa-star" style="color: #fbbf24;"></i> 4.7</span>
+                        </div>
+                        <p style="color: var(--gray); margin-bottom: 1rem;">رعاية صحية شاملة مع نخبة من أفضل الأطباء</p>
+                        <div class="clinic-stats">
+                            <div class="stat">
+                                <div class="stat-value">8</div>
+                                <div class="stat-label">دكتور</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">5</div>
+                                <div class="stat-label">تخصص</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">1.8k</div>
+                                <div class="stat-label">مريض</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="clinic-card" onclick="enterClinic('alshifa')">
+                    <div class="clinic-header" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
+                        <div style="height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                            <i class="fas fa-stethoscope"></i>
+                        </div>
+                    </div>
+                    <div class="clinic-logo" style="color: #8b5cf6;">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="clinic-body">
+                        <h3>عيادة الشفاء</h3>
+                        <div class="clinic-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> الدمام، حي الفيصلية</span>
+                            <span><i class="fas fa-star" style="color: #fbbf24;"></i> 4.8</span>
+                        </div>
+                        <p style="color: var(--gray); margin-bottom: 1rem;">تخصصات دقيقة وخدمات استشارية على مدار الساعة</p>
+                        <div class="clinic-stats">
+                            <div class="stat">
+                                <div class="stat-value">15</div>
+                                <div class="stat-label">دكتور</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">10</div>
+                                <div class="stat-label">تخصص</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">3.2k</div>
+                                <div class="stat-label">مريض</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
-            <ul class="lms-list">
-              <li>
-                <div class="check-icon"><i class="fas fa-check"></i></div>
-                <div>
-                  <strong>نظامان للكورسات:</strong> اختر بين النظام التسلسلي
-                  (إلزامي الترتيب) أو النظام المفتوح.
+    <!-- App Container -->
+    <div class="app-container" id="app">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="clinic-avatar" id="clinicAvatar">
+                    <i class="fas fa-hospital"></i>
                 </div>
-              </li>
-              <li>
-                <div class="check-icon"><i class="fas fa-check"></i></div>
                 <div>
-                  <strong>الواجبات والتصحيح:</strong> واجبات اخترارية (تصحيح
-                  تلقائي) ومقالية (تصحيح يدوي).
+                    <h3 id="clinicName">عيادة النور</h3>
+                    <p style="font-size: 0.85rem; color: var(--gray);">منصة Tabib</p>
                 </div>
-              </li>
-              <li>
-                <div class="check-icon"><i class="fas fa-check"></i></div>
-                <div>
-                  <strong>الامتحانات الآمنة:</strong> زمن محدد، وخروج تلقائي في
-                  حال مغادرة الطالب للامتحان.
-                </div>
-              </li>
-              <li>
-                <div class="check-icon"><i class="fas fa-check"></i></div>
-                <div>
-                  <strong>فيديوهات استثنائية:</strong> إمكانية جعل فيديوهات
-                  معينة (مثل المراجعات) مفتوحة خارج التسلسل.
-                </div>
-              </li>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li class="menu-item">
+                    <a class="menu-link active" onclick="showSection('dashboard')">
+                        <i class="fas fa-home"></i>
+                        <span>الرئيسية</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" onclick="showSection('appointments')">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>الحجوزات</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" onclick="showSection('records')">
+                        <i class="fas fa-file-medical"></i>
+                        <span>الملف الطبي</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" onclick="showSection('prescriptions')">
+                        <i class="fas fa-prescription-bottle-alt"></i>
+                        <span>الروشتات</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" onclick="showSection('social')">
+                        <i class="fas fa-comments"></i>
+                        <span>المجتمع</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" onclick="showSection('doctors')">
+                        <i class="fas fa-user-md"></i>
+                        <span>الأطباء</span>
+                    </a>
+                </li>
+                <li class="menu-item" style="margin-top: 2rem;">
+                    <a class="menu-link" onclick="backToLanding()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>خروج</span>
+                    </a>
+                </li>
             </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- قسم السوشيال ميديا -->
-      <section class="social-section container" id="social">
-        <div class="section-title">
-          <h2>تعليم اجتماعي حقيقي</h2>
-          <p>ليست مجرد منصة دروس، بل مجتمع تفاعلي يربط الطلاب بالمدرسين</p>
-        </div>
-
-        <div class="social-grid">
-          <div class="social-info glass-card" style="padding: 40px">
-            <h3>
-              <i
-                class="fas fa-users"
-                style="color: #ec4899; margin-left: 10px"
-              ></i
-              >تفاعل بدون حدود
-            </h3>
-            <p
-              style="
-                margin: 20px 0;
-                line-height: 1.8;
-                color: var(--text-secondary);
-              "
-            >
-              شارك أفكارك، ناقش الدروس، واعرض إنجازاتك. المنصة تتيح للطلاب
-              والمدرسين نشر البوستات، الإعجاب، التعليق، والمشاركة.
-            </p>
-            <h4>
-              <i
-                class="fas fa-certificate"
-                style="color: #3b82f6; margin-left: 10px"
-              ></i
-              >علامة التوثيق
-            </h4>
-            <p
-              style="
-                margin-top: 10px;
-                font-size: 0.95rem;
-                color: var(--text-secondary);
-              "
-            >
-              عندما يصل المدرس إلى <strong>5000 متابع</strong>، يحصل تلقائياً
-              على علامة التوثيق الذهبية، مما يزيد من مصداقيته.
-            </p>
-            <div
-              style="
-                margin-top: 20px;
-                font-size: 0.9rem;
-                color: var(--text-secondary);
-              "
-            >
-              <i class="fas fa-eye-slash"></i> المتابعات خاصة: يظهر عدد
-              المتابعين فقط، ولا تظهر قائمة بأسمائهم.
-            </div>
-          </div>
-
-          <!-- محاكاة بوست -->
-          <div class="social-feed-mockup">
-            <div class="post-header">
-              <img
-                src="https://picsum.photos/seed/teacher/50/50"
-                alt="Teacher"
-                class="avatar"
-              />
-              <div>
-                <div
-                  style="font-weight: bold; display: flex; align-items: center"
-                >
-                  أ. محمد أحمد
-                  <i class="fas fa-check-circle verified-badge"></i>
+        </aside>
+        
+        <main class="main-content">
+            <div class="top-bar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="بحث...">
                 </div>
-                <div style="font-size: 0.8rem; color: var(--text-secondary)">
-                  منذ ساعتين
+                <div class="user-menu">
+                    <button class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <div class="user-profile">
+                        <div class="user-avatar">أ</div>
+                        <div>
+                            <div style="font-weight: 600;">أحمد محمد</div>
+                            <div style="font-size: 0.85rem; color: var(--gray);">مريض</div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-            <div style="margin-bottom: 15px; font-size: 0.95rem">
-              تم إضافة الكورس الجديد لقواعد البيانات! 🚀<br />
-              مناقشة شيقة اليوم مع الطلاب حول الـ Normalization.
+            
+            <!-- Dashboard Section -->
+            <div class="content-section active" id="dashboard">
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-blue">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>5</h3>
+                            <p>حجوزات قادمة</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-green">
+                            <i class="fas fa-file-medical"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>12</h3>
+                            <p>زيارة سابقة</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-orange">
+                            <i class="fas fa-prescription-bottle-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>3</h3>
+                            <p>روشتات نشطة</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-purple">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>98%</h3>
+                            <p>مؤشر الصحة</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>حجوزات اليوم</h3>
+                            <button class="btn btn-primary" style="padding: 0.5rem 1rem;">
+                                <i class="fas fa-plus"></i>
+                                حجز جديد
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="appointment-item">
+                                <div class="appointment-time">
+                                    <div class="time">09:00</div>
+                                    <div class="period">صباحاً</div>
+                                </div>
+                                <div class="appointment-info">
+                                    <h4>د. خالد العمري</h4>
+                                    <p>استشارة عامة - العيادة الرئيسية</p>
+                                </div>
+                                <span class="status-badge status-confirmed">مؤكد</span>
+                            </div>
+                            <div class="appointment-item">
+                                <div class="appointment-time">
+                                    <div class="time">11:30</div>
+                                    <div class="period">صباحاً</div>
+                                </div>
+                                <div class="appointment-info">
+                                    <h4>د. سارة الأحمد</h4>
+                                    <p>متابعة دورية - قسم النساء</p>
+                                </div>
+                                <span class="status-badge status-pending">قيد الانتظار</span>
+                            </div>
+                            <div class="appointment-item">
+                                <div class="appointment-time">
+                                    <div class="time">02:00</div>
+                                    <div class="period">مساءً</div>
+                                </div>
+                                <div class="appointment-info">
+                                    <h4>د. محمد الفهد</h4>
+                                    <p>فحص دوري - العيادة الرئيسية</p>
+                                </div>
+                                <span class="status-badge status-confirmed">مؤكد</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>التقويم</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="calendar-grid">
+                                <div class="calendar-header">أحد</div>
+                                <div class="calendar-header">إثن</div>
+                                <div class="calendar-header">ثلا</div>
+                                <div class="calendar-header">أرب</div>
+                                <div class="calendar-header">خم</div>
+                                <div class="calendar-header">جم</div>
+                                <div class="calendar-header">سبت</div>
+                                
+                                <div class="calendar-day">1</div>
+                                <div class="calendar-day">2</div>
+                                <div class="calendar-day">3</div>
+                                <div class="calendar-day">4</div>
+                                <div class="calendar-day">5</div>
+                                <div class="calendar-day">6</div>
+                                <div class="calendar-day">7</div>
+                                <div class="calendar-day">8</div>
+                                <div class="calendar-day active has-event">9</div>
+                                <div class="calendar-day has-event">10</div>
+                                <div class="calendar-day">11</div>
+                                <div class="calendar-day has-event">12</div>
+                                <div class="calendar-day">13</div>
+                                <div class="calendar-day">14</div>
+                                <div class="calendar-day">15</div>
+                                <div class="calendar-day">16</div>
+                                <div class="calendar-day">17</div>
+                                <div class="calendar-day has-event">18</div>
+                                <div class="calendar-day">19</div>
+                                <div class="calendar-day">20</div>
+                                <div class="calendar-day">21</div>
+                                <div class="calendar-day">22</div>
+                                <div class="calendar-day">23</div>
+                                <div class="calendar-day">24</div>
+                                <div class="calendar-day">25</div>
+                                <div class="calendar-day">26</div>
+                                <div class="calendar-day">27</div>
+                                <div class="calendar-day">28</div>
+                                <div class="calendar-day">29</div>
+                                <div class="calendar-day">30</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <img
-              src="https://picsum.photos/seed/coding/400/200"
-              alt="Post Image"
-              style="width: 100%; border-radius: 10px; margin-bottom: 10px"
-            />
+            
+            <!-- Appointments Section -->
+            <div class="content-section" id="appointments">
+                <div class="section-header">
+                    <h2>إدارة الحجوزات</h2>
+                    <button class="btn btn-primary" onclick="openBookingModal()">
+                        <i class="fas fa-plus"></i>
+                        حجز موعد جديد
+                    </button>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div style="display: flex; gap: 1rem;">
+                            <button class="btn btn-secondary" style="padding: 0.5rem 1rem;">الكل</button>
+                            <button class="btn" style="padding: 0.5rem 1rem; background: none; color: var(--gray);">قادمة</button>
+                            <button class="btn" style="padding: 0.5rem 1rem; background: none; color: var(--gray);">سابقة</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="appointment-item">
+                            <div class="appointment-time">
+                                <div class="time">15 مارس</div>
+                                <div class="period">09:00 ص</div>
+                            </div>
+                            <div class="appointment-info">
+                                <h4>د. خالد العمري</h4>
+                                <p>طب عام - استشارة دورية</p>
+                            </div>
+                            <span class="status-badge status-confirmed">مؤكد</span>
+                            <button class="btn" style="background: none; color: var(--gray);">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                        <div class="appointment-item">
+                            <div class="appointment-time">
+                                <div class="time">18 مارس</div>
+                                <div class="period">11:30 ص</div>
+                            </div>
+                            <div class="appointment-info">
+                                <h4>د. سارة الأحمد</h4>
+                                <p>أمراض النساء - متابعة</p>
+                            </div>
+                            <span class="status-badge status-pending">قيد الانتظار</span>
+                            <button class="btn" style="background: none; color: var(--gray);">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Medical Records Section -->
+            <div class="content-section" id="records">
+                <div class="section-header">
+                    <h2>الملف الطبي الإلكتروني</h2>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-download"></i>
+                        تحميل الملف
+                    </button>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div class="record-item">
+                            <div class="record-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="record-content">
+                                <h4>زيارة استشارية - د. خالد العمري</h4>
+                                <p>تم الفحص العام والتأكد من سلامة القلب والرئتين...</p>
+                                <div class="record-meta">
+                                    <span><i class="fas fa-calendar"></i> 15 فبراير 2025</span>
+                                    <span><i class="fas fa-hospital"></i> عيادة النور</span>
+                                    <span><i class="fas fa-paperclip"></i> 3 مرفقات</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="record-item">
+                            <div class="record-icon">
+                                <i class="fas fa-flask"></i>
+                            </div>
+                            <div class="record-content">
+                                <h4>تحليل دم شامل</h4>
+                                <p>جميع النتائج ضمن المعدل الطبيعي...</p>
+                                <div class="record-meta">
+                                    <span><i class="fas fa-calendar"></i> 10 فبراير 2025</span>
+                                    <span><i class="fas fa-hospital"></i> مختبر العيادة</span>
+                                    <span><i class="fas fa-paperclip"></i> 1 مرفق</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Prescriptions Section -->
+            <div class="content-section" id="prescriptions">
+                <div class="section-header">
+                    <h2>الروشتات الطبية</h2>
+                </div>
+                
+                <div style="display: grid; gap: 1.5rem;">
+                    <div class="card">
+                        <div class="card-header" style="background: linear-gradient(135deg, #f0fdf4, #ffffff); border-bottom: 2px solid #bbf7d0;">
+                            <div>
+                                <h3 style="color: #15803d; margin-bottom: 0.25rem;">روشتة نشطة</h3>
+                                <p style="font-size: 0.9rem; color: var(--gray);">د. خالد العمري - 15 فبراير 2025</p>
+                            </div>
+                            <span class="status-badge status-confirmed">سارية</span>
+                        </div>
+                        <div class="card-body">
+                            <div style="display: grid; gap: 1rem;">
+                                <div style="display: flex; justify-content: space-between; padding: 1rem; background: #f8fafc; border-radius: 0.5rem;">
+                                    <div>
+                                        <h4>Amoxicillin 500mg</h4>
+                                        <p style="color: var(--gray); font-size: 0.9rem;">مضاد حيوي</p>
+                                    </div>
+                                    <div style="text-align: left;">
+                                        <p>قرص كل 8 ساعات</p>
+                                        <p style="color: var(--gray); font-size: 0.85rem;">لمدة 7 أيام</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Social Feed Section -->
+            <div class="content-section" id="social">
+                <div class="feed-container">
+                    <div class="create-post">
+                        <div class="post-input">
+                            <div class="author-avatar">أ</div>
+                            <textarea placeholder="شارك تجربتك أو اطرح سؤالك الطبي..."></textarea>
+                        </div>
+                        <div class="post-actions">
+                            <div class="post-tools">
+                                <button class="tool-btn"><i class="fas fa-image"></i></button>
+                                <button class="tool-btn"><i class="fas fa-video"></i></button>
+                                <button class="tool-btn"><i class="fas fa-poll"></i></button>
+                            </div>
+                            <button class="btn btn-primary">نشر</button>
+                        </div>
+                    </div>
+                    
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="post-author">
+                                <div class="author-avatar" style="background: linear-gradient(135deg, #0ea5e9, #06b6d4);">ع</div>
+                                <div class="author-info">
+                                    <h4>عيادة النور</h4>
+                                    <span>قبل ساعتين • الرياض</span>
+                                </div>
+                            </div>
+                            <button class="btn" style="background: none;"><i class="fas fa-ellipsis-h"></i></button>
+                        </div>
+                        <div class="post-content">
+                            نعلن عن وصول أحدث أجهزة الفحص الطبي إلى عيادتنا! 🎉
+                            احجز موعدك الآن للاستفادة من خصم 20% على الفحوصات الشاملة.
+                        </div>
+                        <div class="post-stats">
+                            <button class="stat-btn"><i class="fas fa-heart"></i> 245</button>
+                            <button class="stat-btn"><i class="fas fa-comment"></i> 42</button>
+                            <button class="stat-btn"><i class="fas fa-share"></i> 18</button>
+                        </div>
+                    </div>
+                    
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="post-author">
+                                <div class="author-avatar" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">د</div>
+                                <div class="author-info">
+                                    <h4>د. سارة الأحمد</h4>
+                                    <span>قبل 4 ساعات • طبيبة نساء</span>
+                                </div>
+                            </div>
+                            <button class="btn" style="background: none;"><i class="fas fa-ellipsis-h"></i></button>
+                        </div>
+                        <div class="post-content">
+                            نصيحة اليوم: شرب الماء بانتظام يساعد في تحسين الدورة الدموية والحفاظ على صحة الجلد. 
+                            حاول شرب 8 أكواب يومياً! 💧
+                        </div>
+                        <div class="post-stats">
+                            <button class="stat-btn liked"><i class="fas fa-heart"></i> 892</button>
+                            <button class="stat-btn"><i class="fas fa-comment"></i> 156</button>
+                            <button class="stat-btn"><i class="fas fa-share"></i> 324</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Doctors Section -->
+            <div class="content-section" id="doctors">
+                <div class="section-header">
+                    <h2>أطباء العيادة</h2>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-filter"></i>
+                        تصفية
+                    </button>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                    <div class="card">
+                        <div class="card-body" style="text-align: center;">
+                            <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem;">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <h3>د. خالد العمري</h3>
+                            <p style="color: var(--gray); margin-bottom: 1rem;">استشاري طب عام</p>
+                            <div style="display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1rem;">
+                                <span style="color: #fbbf24;"><i class="fas fa-star"></i> 4.9</span>
+                                <span style="color: var(--gray);">(128 تقييم)</span>
+                            </div>
+                            <button class="btn btn-primary" style="width: 100%;">حجز موعد</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-body" style="text-align: center;">
+                            <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #ec4899, #f472b6); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem;">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <h3>د. سارة الأحمد</h3>
+                            <p style="color: var(--gray); margin-bottom: 1rem;">أخصائية أمراض النساء</p>
+                            <div style="display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1rem;">
+                                <span style="color: #fbbf24;"><i class="fas fa-star"></i> 4.8</span>
+                                <span style="color: var(--gray);">(96 تقييم)</span>
+                            </div>
+                            <button class="btn btn-primary" style="width: 100%;">حجز موعد</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 
-            <div class="post-actions">
-              <div class="action-item"><i class="far fa-heart"></i> 120</div>
-              <div class="action-item"><i class="far fa-comment"></i> 45</div>
-              <div class="action-item">
-                <i class="far fa-share-square"></i> مشاركة
-              </div>
-              <div class="action-item"><i class="far fa-bookmark"></i> حفظ</div>
+    <!-- AI Assistant -->
+    <div class="ai-container">
+        <div class="ai-chat" id="aiChat">
+            <div class="ai-header">
+                <div class="ai-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div>
+                    <h4>مساعد Tabib الذكي</h4>
+                    <p style="font-size: 0.85rem; opacity: 0.9;">متصل الآن</p>
+                </div>
             </div>
-          </div>
+            <div class="ai-messages" id="aiMessages">
+                <div class="message ai">
+                    مرحباً! 👋 أنا مساعدك الذكي في Tabib. كيف يمكنني مساعدتك اليوم؟
+                    <div class="suggestion-chips">
+                        <span class="chip" onclick="sendAI('أريد حجز موعد')">أريد حجز موعد</span>
+                        <span class="chip" onclick="sendAI('أشعر بألم في الصدر')">أشعر بألم في الصدر</span>
+                        <span class="chip" onclick="sendAI('عرض روشتاتي')">عرض روشتاتي</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ai-input">
+                <input type="text" id="aiInput" placeholder="اكتب رسالتك هنا..." onkeypress="handleAIInput(event)">
+                <button onclick="sendAIMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
         </div>
-      </section>
+        <button class="ai-button" onclick="toggleAI()">
+            <i class="fas fa-robot"></i>
+        </button>
+    </div>
 
-      <!-- التقنية -->
-      <section class="container tech-stack">
-        <div
-          class="glass-card"
-          style="padding: 30px; display: inline-block; width: 100%"
-        >
-          <h3>مدعوم بتقنيات عالمية</h3>
-          <p style="color: var(--text-secondary)">
-            نضمن لك السرعة والأمان باستخدام أفضل البنيات التحتية
-          </p>
-          <div class="tech-logos">
-            <div class="tech-item">
-              <i class="fas fa-server" style="color: #f97316"></i> Hetzner
-              Hosting
+    <!-- Auth Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>تسجيل الدخول</h2>
+                <button class="close-btn" onclick="closeAuthModal()"><i class="fas fa-times"></i></button>
             </div>
-            <div class="tech-item">
-              <i class="fas fa-video" style="color: #3b82f6"></i> Bunny Stream
+            <div class="modal-body">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="switchAuthTab('login')">دخول</button>
+                    <button class="auth-tab" onclick="switchAuthTab('register')">حساب جديد</button>
+                </div>
+                
+                <div class="user-type-selector">
+                    <div class="user-type-card selected" onclick="selectUserType(this, 'patient')">
+                        <i class="fas fa-user"></i>
+                        <div>مريض</div>
+                    </div>
+                    <div class="user-type-card" onclick="selectUserType(this, 'doctor')">
+                        <i class="fas fa-user-md"></i>
+                        <div>دكتور</div>
+                    </div>
+                    <div class="user-type-card" onclick="selectUserType(this, 'clinic')">
+                        <i class="fas fa-hospital"></i>
+                        <div>عيادة</div>
+                    </div>
+                </div>
+                
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>البريد الإلكتروني</label>
+                        <input type="email" placeholder="example@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>كلمة المرور</label>
+                        <input type="password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                        دخول
+                    </button>
+                </form>
             </div>
-          </div>
         </div>
-      </section>
-    </main>
+    </div>
 
-    <!-- الفوتر -->
-    <footer>
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-col">
-            <div class="logo" style="margin-bottom: 20px">MAJMA</div>
-            <p style="color: var(--text-secondary); font-size: 0.9rem">
-              المنصة الرائدة التي تجمع بين التعليم الأكاديمي والتفاعل الاجتماعي
-              الذكي.
-            </p>
-          </div>
-          <div class="footer-col">
-            <h4>روابط سريعة</h4>
-            <ul>
-              <li><a href="#">الرئيسية</a></li>
-              <li><a href="#">عن المنصة</a></li>
-              <li><a href="#">المساعدة</a></li>
-            </ul>
-          </div>
-          <div class="footer-col">
-            <h4>قانوني</h4>
-            <ul>
-              <li><a href="#">شروط الاستخدام</a></li>
-              <li><a href="#">سياسة الخصوصية</a></li>
-            </ul>
-          </div>
+    <!-- Booking Modal -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>حجز موعد جديد</h2>
+                <button class="close-btn" onclick="closeBookingModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="handleBooking(event)">
+                    <div class="form-group">
+                        <label>اختر الطبيب</label>
+                        <select required>
+                            <option value="">اختر...</option>
+                            <option>د. خالد العمري - طب عام</option>
+                            <option>د. سارة الأحمد - أمراض النساء</option>
+                            <option>د. محمد الفهد - جلدية</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>التاريخ</label>
+                        <input type="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>الوقت</label>
+                        <select required>
+                            <option value="">اختر...</option>
+                            <option>09:00 صباحاً</option>
+                            <option>10:00 صباحاً</option>
+                            <option>11:00 صباحاً</option>
+                            <option>12:00 ظهراً</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>سبب الزيارة</label>
+                        <textarea rows="3" placeholder="اشرح أعراضك أو سبب الزيارة..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        تأكيد الحجز
+                    </button>
+                </form>
+            </div>
         </div>
-        <div class="copyright">&copy; 2023 مجمع MAJMA. جميع الحقوق محفوظة.</div>
-      </div>
-    </footer>
+    </div>
 
-    <!-- سكريبت التفاعل -->
     <script>
-      // التعامل مع تبديل الثيم (Light/Dark Mode)
-      const themeToggle = document.getElementById("theme-toggle");
-      const body = document.body;
-      const logoImg = document.getElementById("logo-img");
-      const icon = themeToggle.querySelector("i");
-
-      // ✅ التعديل هنا: استبدال روابط الصور بأسماء ملفاتك المحلية
-      const lightLogo = "black-majma.png"; // صورة اللوجو للوضع النهاري
-      const darkLogo = "white-majma.png"; // صورة اللوجو للوضع الليلي
-
-      themeToggle.addEventListener("click", () => {
-        // ... باقي الكود كما هو بدون تغيير ...
-        if (body.classList.contains("light-mode")) {
-          // التحويل للوضع الليلي
-          body.classList.remove("light-mode");
-          body.classList.add("dark-mode");
-          icon.classList.remove("fa-moon");
-          icon.classList.add("fa-sun");
-          logoImg.src = darkLogo; // تغيير اللوجو
-        } else {
-          // التحويل للوضع النهاري
-          body.classList.remove("dark-mode");
-          body.classList.add("light-mode");
-          icon.classList.remove("fa-sun");
-          icon.classList.add("fa-moon");
-          logoImg.src = lightLogo; // تغيير اللوجو
+        // Navigation
+        function showSection(sectionId) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            
+            document.querySelectorAll('.menu-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.closest('.menu-link').classList.add('active');
         }
-      });
-
-      // تأثير تغيير خلفية الهيدر عند السكرول
-      const header = document.getElementById("header");
-      window.addEventListener("scroll", () => {
-        if (window.scrollY > 50) {
-          header.classList.add("scrolled");
-        } else {
-          header.classList.remove("scrolled");
+        
+        function enterClinic(clinicId) {
+            document.getElementById('landing').style.display = 'none';
+            document.getElementById('app').style.display = 'block';
+            
+            const clinics = {
+                'alnoor': { name: 'عيادة النور', icon: 'fa-hospital', color: '#0ea5e9' },
+                'alsalam': { name: 'عيادة السلام', icon: 'fa-heartbeat', color: '#10b981' },
+                'alshifa': { name: 'عيادة الشفاء', icon: 'fa-user-md', color: '#8b5cf6' }
+            };
+            
+            const clinic = clinics[clinicId];
+            document.getElementById('clinicName').textContent = clinic.name;
+            document.getElementById('clinicAvatar').innerHTML = `<i class="fas ${clinic.icon}"></i>`;
+            document.getElementById('clinicAvatar').style.background = `linear-gradient(135deg, ${clinic.color}, ${clinic.color}88)`;
         }
-      });
-
-      // تأثير بسيط عند الضغط على الأزرار
-      const buttons = document.querySelectorAll(".btn");
-      buttons.forEach((btn) => {
-        btn.addEventListener("click", function (e) {
-          // منع السلوك الافتراضي فقط للديمو
-          if (this.getAttribute("href") === "#") {
+        
+        function backToLanding() {
+            document.getElementById('app').style.display = 'none';
+            document.getElementById('landing').style.display = 'flex';
+        }
+        
+        function scrollToClinics() {
+            document.getElementById('clinics').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Modals
+        function openAuthModal(type) {
+            document.getElementById('authModal').classList.add('active');
+        }
+        
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.remove('active');
+        }
+        
+        function openBookingModal() {
+            document.getElementById('bookingModal').classList.add('active');
+        }
+        
+        function closeBookingModal() {
+            document.getElementById('bookingModal').classList.remove('active');
+        }
+        
+        function switchAuthTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+        
+        function selectUserType(card, type) {
+            document.querySelectorAll('.user-type-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+        }
+        
+        function handleLogin(e) {
             e.preventDefault();
-          }
-
-          // إنشاء تأثير تموج بسيط (Visual Feedback)
-          const originalText = this.innerText;
-          this.style.transform = "scale(0.95)";
-          setTimeout(() => {
-            this.style.transform = "scale(1)";
-          }, 100);
-        });
-      });
+            closeAuthModal();
+            enterClinic('alnoor');
+        }
+        
+        function handleBooking(e) {
+            e.preventDefault();
+            closeBookingModal();
+            alert('تم الحجز بنجاح! ✅');
+        }
+        
+        // AI Assistant
+        function toggleAI() {
+            document.getElementById('aiChat').classList.toggle('open');
+        }
+        
+        function handleAIInput(e) {
+            if (e.key === 'Enter') sendAIMessage();
+        }
+        
+        function sendAI(text) {
+            const messages = document.getElementById('aiMessages');
+            
+            // User message
+            messages.innerHTML += `
+                <div class="message user">${text}</div>
+            `;
+            
+            // AI typing indicator
+            const typingId = 'typing-' + Date.now();
+            messages.innerHTML += `
+                <div class="message ai" id="${typingId}">
+                    <div class="typing-indicator">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+            `;
+            messages.scrollTop = messages.scrollHeight;
+            
+            // AI response after delay
+            setTimeout(() => {
+                document.getElementById(typingId).remove();
+                
+                let response = '';
+                let chips = '';
+                
+                if (text.includes('حجز')) {
+                    response = 'بالطبع! يمكنني مساعدتك في حجز موعد. إليك الأطباء المتاحين غداً:';
+                    chips = '<span class="chip" onclick="sendAI(\'د. خالد العمري\')">د. خالد العمري - 9 ص</span><span class="chip" onclick="sendAI(\'د. سارة الأحمد\')">د. سارة الأحمد - 11 ص</span>';
+                } else if (text.includes('ألم') || text.includes('صدر')) {
+                    response = 'أنصحك بمراجعة طبيب القلب أو الطوارئ فوراً. هل تريدني أن أحجز لك موعد طوارئ في أقرب عيادة؟';
+                    chips = '<span class="chip" onclick="sendAI(\'نعم احجز طوارئ\')">نعم، احجز طوارئ</span><span class="chip" onclick="sendAI(\'لا شكراً\')">لا، شكراً</span>';
+                } else if (text.includes('روشتة')) {
+                    response = 'لديك 3 روشتات نشطة. آخر روشتة من د. خالد العمري بتاريخ 15 فبراير.';
+                    chips = '<span class="chip" onclick="sendAI(\'عرض تفاصيل الروشتة\')">عرض التفاصيل</span><span class="chip" onclick="sendAI(\'تجديد الروشتة\')">طلب تجديد</span>';
+                } else {
+                    response = 'أفهمك! يمكنني مساعدتك في: حجز المواعيد، الاستشارات الطبية، أو توجيهك للتخصص المناسب. ما الذي تحتاجه؟';
+                    chips = '<span class="chip" onclick="sendAI(\'استشارة طبية\')">استشارة طبية</span><span class="chip" onclick="sendAI(\'حجز موعد\')">حجز موعد</span>';
+                }
+                
+                messages.innerHTML += `
+                    <div class="message ai">
+                        ${response}
+                        <div class="suggestion-chips">${chips}</div>
+                    </div>
+                `;
+                messages.scrollTop = messages.scrollHeight;
+            }, 1500);
+        }
+        
+        function sendAIMessage() {
+            const input = document.getElementById('aiInput');
+            if (input.value.trim()) {
+                sendAI(input.value);
+                input.value = '';
+            }
+        }
+        
+        // Close modals on outside click
+        window.onclick = function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('active');
+            }
+        }
     </script>
-  </body>
+</body>
 </html>
